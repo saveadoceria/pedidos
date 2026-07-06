@@ -129,7 +129,7 @@ export default function CardapioDigital() {
           
           itemsTexto += `- ${qtd}x ${p.nome}:\n`;
           Object.entries(contagemSabores).forEach(([sab, q]) => {
-            itensTexto += `   • ${q}x Recheio de ${sab}\n`;
+            itemsTexto += `   • ${q}x Recheio de ${sab}\n`;
           });
         } else {
           itemsTexto += `- ${qtd}x ${p.nome}\n`;
