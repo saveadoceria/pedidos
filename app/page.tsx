@@ -362,7 +362,15 @@ export default function CardapioDigital() {
             </div>
           )}
 
-          <div className="text-center mt-5 text-[11px] text-gray-400">🔒 Pagamento feito pessoalmente, na retirada.</div>
+<div className="text-center mt-5 text-[11px] text-gray-400 flex flex-col items-center gap-1">
+  <span>🔒 Pagamento feito pessoalmente, na retirada.</span>
+  <a href="https://www.gruposavea.com.br" target="_blank" className="flex items-center gap-1 hover:text-gray-600 transition-colors">
+    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+    </svg>
+    www.gruposavea.com.br
+  </a>
+</div>
         </div>
         
         {/* RODAPÉ MARCA */}
