@@ -188,14 +188,28 @@ export default function CardapioDigital() {
         (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '')
       : `🏠 *Retirada no Local*`;
 
-    const textoFormatado = `*Novo Pedido - Doceria Sávea* 🍪\n\n` +
-      `*Cliente:* ${dadosCliente.nome}\n` +
-      `*WhatsApp:* ${dadosCliente.whatsapp}\n\n` +
-      `${enderecoTexto}\n` +
-      `${agendamentoTexto}\n` +
-      `🔒 *PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
-      `*Itens do Pedido:*\n${itemsTexto}\n` +
-      `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+      let pagamentoTexto = '';
+      if (formaPagamento === 'pix') {
+        pagamentoTexto = '*💳 Pagamento:* Pix';
+      } else if (formaPagamento === 'cartao_entrega') {
+        pagamentoTexto = '*💳 Pagamento:* Cartão na Entrega (Levar Maquininha)';
+      } else if (formaPagamento === 'dinheiro') {
+        if (trocoPara) {
+          pagamentoTexto = `*💵 Pagamento:* Dinheiro (Troco para R$ ${trocoPara})`;
+        } else {
+          pagamentoTexto = '*💵 Pagamento:* Dinheiro (Não precisa de troco)';
+        }
+      }
+    
+      const textoFormatado = `*🧁 Novo Pedido - Doceria Sávea* 🍪\n\n` +
+        `*Cliente:* ${dadosCliente.nome}\n` +
+        `*WhatsApp:* ${dadosCliente.whatsapp}\n\n` +
+        `${enderecoTexto}\n` +
+        `${agendamentoTexto}\n` +
+        `🔐 *PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
+        `*Itens do Pedido:*\n${itemsTexto}\n` +
+        `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}\n` +
+        `${pagamentoTexto}`;
       
     const numeroWhats = "5514999999999"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
