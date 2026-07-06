@@ -412,7 +412,7 @@ export default function CardapioDigital() {
 )}
 
           {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
-          {passo === 3 && (
+{passo === 3 && (
   <div className="space-y-4 text-center text-sm">
     <p className="font-medium text-gray-600">Como deseja receber?</p>
     <div className="grid grid-cols-2 gap-2 text-left">
@@ -432,135 +432,66 @@ export default function CardapioDigital() {
       </button>
     </div>
 
+    {/* CAMPOS DE ENTREGA */}
     {dadosCliente.tipoEntrega === 'Entrega' && (
-      <div className="text-left animate-in fade-in">
+      <div className="space-y-3 text-left animate-in fade-in">
         <input 
           placeholder="Digite seu CEP" 
           className="w-full p-3 border border-gray-200 rounded-xl"
           value={dadosCliente.cep}
-          onChange={(e) => {
-            setDadosCliente({...dadosCliente, cep: e.target.value});
-            buscarCep(e.target.value);
-          }}
+          onChange={(e) => { setDadosCliente({...dadosCliente, cep: e.target.value}); buscarCep(e.target.value); }}
         />
+        <div className="grid grid-cols-2 gap-2">
+          <input placeholder="Rua" className="p-3 border rounded-xl bg-gray-50" value={dadosCliente.rua} readOnly />
+          <input placeholder="Nº" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, numero: e.target.value})} />
+        </div>
+        <input placeholder="Bairro" className="w-full p-3 border rounded-xl bg-gray-50" value={dadosCliente.bairro} readOnly />
+        <input placeholder="Complemento" className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
+        
+        <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
+          ⏰ Tempo estimado: 40 a 60 min.
+        </p>
 
-<div className="grid grid-cols-2 gap-2 mt-2">
-  <input placeholder="Rua" className="p-3 border border-gray-200 rounded-xl bg-gray-50" value={dadosCliente.rua} readOnly />
-  <input placeholder="Nº" className="p-3 border border-gray-200 rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, numero: e.target.value})} />
-</div>
-<input placeholder="Bairro" className="w-full p-3 border border-gray-200 rounded-xl mt-2 bg-gray-50" value={dadosCliente.bairro} readOnly />
-<input placeholder="Complemento (opcional)" className="w-full p-3 border border-gray-200 rounded-xl mt-2" onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
+        <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
+          <option value="imediato">Entrega Imediata</option>
+          <option value="agendado">Agendar para outro dia/hora</option>
+        </select>
 
+        {dadosCliente.agendamento === 'agendado' && (
+          <div className="grid grid-cols-2 gap-2">
+            <input type="date" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} />
+            <input type="time" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} />
+          </div>
+        )}
+
+        <select className="w-full p-3 border rounded-xl" value={dadosCliente.tipoImovel} onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}>
+          <option value="">Tipo de imóvel</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+
+        <textarea placeholder="Obs. para o entregador" className="w-full p-3 border rounded-xl h-20" onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})} />
+
+        <label className="block text-xs font-bold text-gray-600">Defina seu PIN (4 dígitos)</label>
+        <input type="number" placeholder="1234" className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})} />
       </div>
     )}
-  </div>
-)}
 
-{dadosCliente.tipoEntrega === 'Entrega' && (
-    <div className="space-y-3 mt-3">
-      <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
-        ⏰ Tempo estimado de entrega: 40 a 60 min.
-      </p>
-
-      <div className="space-y-2 pt-2 border-t mt-3">
-  <p className="font-medium text-sm">Agendamento:</p>
-  <select 
-    className="w-full p-3 border border-gray-200 rounded-xl" 
-    value={dadosCliente.agendamento}
-    onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}
-  >
-    <option value="imediato">Entrega Imediata</option>
-    <option value="agendado">Agendar para outro dia/hora</option>
-  </select>
-
-  {dadosCliente.agendamento === 'agendado' && (
-    <div className="grid grid-cols-2 gap-2 animate-in fade-in">
-      <input 
-        type="date" 
-        className="p-3 border border-gray-200 rounded-xl" 
-        onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} 
-      />
-      <input 
-        type="time" 
-        className="p-3 border border-gray-200 rounded-xl" 
-        onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} 
-      />
-    </div>
-  )}
-</div>
-
-<div className="flex space-x-2 pt-4">
-  <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
-  <button 
-    onClick={finalizarPedido} 
-    className="flex-1 text-white font-medium py-3 rounded-xl" 
-    style={{ backgroundColor: '#5f6443' }}
-  >
-    Confirmar Pedido
-  </button>
-</div>
-
-<div className="space-y-3 pt-3">
-      <select 
-        className="w-full p-3 border border-gray-200 rounded-xl"
-        value={dadosCliente.tipoImovel}
-        onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}
-      >
-        <option value="">Tipo de imóvel</option>
-        <option value="Casa">Casa</option>
-        <option value="Apartamento">Apartamento</option>
-        <option value="Comercial">Comercial</option>
-      </select>
-
-      <textarea 
-        placeholder="Obs. para o entregador (ex: portão azul)" 
-        className="w-full p-3 border border-gray-200 rounded-xl h-20"
-        value={dadosCliente.obsEntregador}
-        onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})}
-      />
-
-      <div className="text-left">
-        <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
-        <input 
-          type="number" 
-          value={dadosCliente.pin} 
-          placeholder="Ex: 1234" 
-          className="w-full p-3 border border-gray-200 rounded-xl outline-none"
-          onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
-        />
-      </div>
-    </div>
-
+    {/* BOTÕES DE CONTROLE */}
     <div className="flex space-x-2 pt-4">
-      <button 
-        onClick={() => setPasso(2)} 
-        className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1"
-      >
-        Voltar
-      </button>
+      <button onClick={() => setPasso(2)} className="px-4 py-3 border rounded-xl bg-gray-50 flex-1">Voltar</button>
       <button 
         onClick={finalizarPedido} 
-        disabled={!dadosCliente.pin || dadosCliente.pin.length < 4}
+        disabled={dadosCliente.tipoEntrega === 'Entrega' && (!dadosCliente.pin || dadosCliente.pin.length < 4)}
         className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
         style={{ backgroundColor: '#5f6443' }}
       >
         Confirmar Pedido
       </button>
     </div>
-            </div>
-          )}
-
-
-<div className="text-center mt-5 text-[11px] text-gray-400 flex flex-col items-center gap-1">
-  <span>Acesse nosso site</span>
-  <a href="https://www.gruposavea.com.br" target="_blank" className="flex items-center gap-1 hover:text-gray-600 transition-colors">
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
-    </svg>
-    www.gruposavea.com.br
-  </a>
-</div>
-        </div>
+  </div>
+)}
         
         {/* RODAPÉ MARCA */}
         <div className="text-center text-[10px] text-gray-400 pt-2 flex flex-col items-center justify-center space-y-1">
@@ -620,5 +551,5 @@ export default function CardapioDigital() {
   </div>
 )}
     </div>
-  );
-}
+  </div>
+);
