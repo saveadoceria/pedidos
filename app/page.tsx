@@ -40,14 +40,19 @@ export default function CardapioDigital() {
   const [dadosCliente, setDadosCliente] = useState({
     nome: '',
     whatsapp: '',
-    data: dataFormatada,
-    horario: horarioFormatado,
-    observacoes: '',
     tipoEntrega: '',
+    cep: '',
+    rua: '',
+    numero: '',
+    bairro: '',
+    cidade: '',
+    complemento: '',
+    agendamento: 'imediato', // 'imediato' ou 'agendado'
+    data: '',
+    horario: '',
     pin: '',
-    endereco: '',
-    tipoImovel: '',
-    obsEntregador: ''
+    obsEntregador: '',
+    observacoes: ''
   });
   
   const [experiencia, setExperiencia] = useState('');
@@ -59,6 +64,26 @@ export default function CardapioDigital() {
       setDadosCliente(JSON.parse(dadosSalvos));
     }
   }, []);
+
+  const buscarCep = async (cep: string) => {
+    const cepLimpo = cep.replace(/\D/g, '');
+    if (cepLimpo.length === 8) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+        const data = await res.json();
+        if (!data.erro) {
+          setDadosCliente(prev => ({
+            ...prev,
+            rua: data.logradouro,
+            bairro: data.bairro,
+            cidade: data.localidade
+          }));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar CEP:", error);
+      }
+    }
+  };
 
   const alterarQtd = (id: string, operacao: 'mais' | 'menos') => {
     const produto = PRODUTOS.find(p => p.id === id);
@@ -388,34 +413,48 @@ export default function CardapioDigital() {
 
           {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
           {passo === 3 && (
-            <div className="space-y-4 text-center text-sm">
-              <p className="text-gray-600 font-medium">Como deseja receber?</p>
-              
-              <div className="grid grid-cols-2 gap-2 text-left">
-                <button 
-                  onClick={() => {
-                    setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'});
-                    setAvisoRetirada(true);
-                  }} 
-                  className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`} 
-                  style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
-                >
-                  <p className="font-bold text-gray-900">🏠 Retirada</p>
-                </button>
-                <button 
-                  onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})} 
-                  className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`} 
-                  style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
-                >
-                  <p className="font-bold text-gray-900">🚚 Entrega</p>
-                </button>
-              </div>
+  <div className="space-y-4 text-center text-sm">
+    <p className="font-medium text-gray-600">Como deseja receber?</p>
+    <div className="grid grid-cols-2 gap-2 text-left">
+      <button 
+        onClick={() => { setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'}); setAvisoRetirada(true); }}
+        className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`}
+        style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
+      >
+        <p className="font-bold text-gray-900">🏠 Retirada</p>
+      </button>
+      <button 
+        onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})}
+        className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`}
+        style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
+      >
+        <p className="font-bold text-gray-900">🛵 Entrega</p>
+      </button>
+    </div>
 
-              {dadosCliente.tipoEntrega === 'Entrega' && (
-                <div className="p-3 bg-yellow-50 text-yellow-800 rounded-lg text-xs font-bold text-center">
-                  Taxa fixa de entrega para Bauru: R$ 10,00
-                </div>
-              )}
+    {dadosCliente.tipoEntrega === 'Entrega' && (
+      <div className="text-left animate-in fade-in">
+        <input 
+          placeholder="Digite seu CEP" 
+          className="w-full p-3 border border-gray-200 rounded-xl"
+          value={dadosCliente.cep}
+          onChange={(e) => {
+            setDadosCliente({...dadosCliente, cep: e.target.value});
+            buscarCep(e.target.value);
+          }}
+        />
+
+<div className="grid grid-cols-2 gap-2 mt-2">
+  <input placeholder="Rua" className="p-3 border border-gray-200 rounded-xl bg-gray-50" value={dadosCliente.rua} readOnly />
+  <input placeholder="Nº" className="p-3 border border-gray-200 rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, numero: e.target.value})} />
+</div>
+<input placeholder="Bairro" className="w-full p-3 border border-gray-200 rounded-xl mt-2 bg-gray-50" value={dadosCliente.bairro} readOnly />
+<input placeholder="Complemento (opcional)" className="w-full p-3 border border-gray-200 rounded-xl mt-2" onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
+
+      </div>
+    )}
+  </div>
+)}
 
 {dadosCliente.tipoEntrega === 'Entrega' && (
     <div className="space-y-3 mt-3">
@@ -423,14 +462,45 @@ export default function CardapioDigital() {
         ⏰ Tempo estimado de entrega: 40 a 60 min.
       </p>
 
-      <input 
-        type="text"
-        placeholder="Endereço completo" 
-        className="w-full p-3 border border-gray-200 rounded-xl"
-        value={dadosCliente.endereco}
-        onChange={(e) => setDadosCliente({...dadosCliente, endereco: e.target.value})}
-      />
+      <div className="space-y-2 pt-2 border-t mt-3">
+  <p className="font-medium text-sm">Agendamento:</p>
+  <select 
+    className="w-full p-3 border border-gray-200 rounded-xl" 
+    value={dadosCliente.agendamento}
+    onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}
+  >
+    <option value="imediato">Entrega Imediata</option>
+    <option value="agendado">Agendar para outro dia/hora</option>
+  </select>
 
+  {dadosCliente.agendamento === 'agendado' && (
+    <div className="grid grid-cols-2 gap-2 animate-in fade-in">
+      <input 
+        type="date" 
+        className="p-3 border border-gray-200 rounded-xl" 
+        onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} 
+      />
+      <input 
+        type="time" 
+        className="p-3 border border-gray-200 rounded-xl" 
+        onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} 
+      />
+    </div>
+  )}
+</div>
+
+<div className="flex space-x-2 pt-4">
+  <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
+  <button 
+    onClick={finalizarPedido} 
+    className="flex-1 text-white font-medium py-3 rounded-xl" 
+    style={{ backgroundColor: '#5f6443' }}
+  >
+    Confirmar Pedido
+  </button>
+</div>
+
+<div className="space-y-3 pt-3">
       <select 
         className="w-full p-3 border border-gray-200 rounded-xl"
         value={dadosCliente.tipoImovel}
@@ -444,33 +514,39 @@ export default function CardapioDigital() {
 
       <textarea 
         placeholder="Obs. para o entregador (ex: portão azul)" 
-        className="w-full p-3 border border-gray-200 rounded-xl"
+        className="w-full p-3 border border-gray-200 rounded-xl h-20"
         value={dadosCliente.obsEntregador}
         onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})}
       />
 
-      <label className="block text-xs font-bold text-gray-600 mt-2">Defina seu PIN (4 dígitos)</label>
-      <input 
-        type="number"
-        value={dadosCliente.pin}
-        placeholder="Ex: 1234"
-        className="w-full p-3 border border-gray-200 rounded-xl outline-none"
-        onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
-      />
+      <div className="text-left">
+        <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
+        <input 
+          type="number" 
+          value={dadosCliente.pin} 
+          placeholder="Ex: 1234" 
+          className="w-full p-3 border border-gray-200 rounded-xl outline-none"
+          onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
+        />
+      </div>
     </div>
-  )}
 
-              <div className="flex space-x-2 pt-2">
-                <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
-                <button 
-                  disabled={!dadosCliente.tipoEntrega || dadosCliente.pin.length < 4} 
-                  onClick={finalizarPedido} 
-                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
-                  style={{ backgroundColor: '#5f6443' }}
-                >
-                  Confirmar pedido
-                </button>
-              </div>
+    <div className="flex space-x-2 pt-4">
+      <button 
+        onClick={() => setPasso(2)} 
+        className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1"
+      >
+        Voltar
+      </button>
+      <button 
+        onClick={finalizarPedido} 
+        disabled={!dadosCliente.pin || dadosCliente.pin.length < 4}
+        className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
+        style={{ backgroundColor: '#5f6443' }}
+      >
+        Confirmar Pedido
+      </button>
+    </div>
             </div>
           )}
 
