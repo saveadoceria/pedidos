@@ -537,9 +537,9 @@ export default function CardapioDigital() {
                       <p className="text-xs text-gray-500">Chave Pix na próxima tela</p>
                     </div>
                   </div>
-                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${formaPagamento === 'pix' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
-                    {formaPagamento === 'pix' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
-                  </div>
+                  <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'pix' ? '#5f6443' : '#d1d5db' }}>
+                  {formaPagamento === 'pix' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
+                </div>
                 </button>
 
                 {/* Opção Cartão na Entrega */}
@@ -557,9 +557,9 @@ export default function CardapioDigital() {
                       <p className="text-xs text-gray-500">Levar maquininha (Crédito/Débito)</p>
                     </div>
                   </div>
-                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${formaPagamento === 'cartao_entrega' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
-                    {formaPagamento === 'cartao_entrega' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
-                  </div>
+                  <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'cartao_entrega' ? '#5f6443' : '#d1d5db' }}>
+                  {formaPagamento === 'cartao_entrega' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
+                </div>
                 </button>
 
                 {/* Opção Dinheiro */}
@@ -577,9 +577,9 @@ export default function CardapioDigital() {
                       <p className="text-xs text-gray-500">Pagar na retirada ou entrega</p>
                     </div>
                   </div>
-                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${formaPagamento === 'dinheiro' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
-                    {formaPagamento === 'dinheiro' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
-                  </div>
+                  <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'dinheiro' ? '#5f6443' : '#d1d5db' }}>
+                  {formaPagamento === 'dinheiro' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
+                </div>
                 </button>
               </div>
 
