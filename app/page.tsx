@@ -176,40 +176,40 @@ export default function CardapioDigital() {
       }
     });
 
-    const agendamentoTexto = dadosCliente.agendamento === 'agendado' 
-      ? `📅 *Agendado para:* ${dadosCliente.data} às ${dadosCliente.horario}`
-      : `⚡ *Entrega:* Imediata`;
+    const agendamentoTexto = dadosCliente.agendamento === 'agendamento' || dadosCliente.agendamento === 'agendado'
+    ? `*Agendado para:* ${dadosCliente.data} às ${dadosCliente.horario}`
+    : `*Entrega:* Imediata`;
 
-    const enderecoTexto = dadosCliente.tipoEntrega === 'Entrega'
-      ? `📍 *Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n` +
-        `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.cidade}\n` +
-        (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
-        `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
-        (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '')
-      : `🏠 *Retirada no Local*`;
+  const enderecoTexto = dadosCliente.tipoEntrega === 'Entrega'
+    ? `*Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n` +
+      `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.Cidade || 'Bauru'}\n` +
+      (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
+      `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
+      (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '')
+    : `*Retirada no Local*`;
 
-      let pagamentoTexto = '';
-      if (formaPagamento === 'pix') {
-        pagamentoTexto = '*💳 Pagamento:* Pix';
-      } else if (formaPagamento === 'cartao_entrega') {
-        pagamentoTexto = '*💳 Pagamento:* Cartão na Entrega (Levar Maquininha)';
-      } else if (formaPagamento === 'dinheiro') {
-        if (trocoPara) {
-          pagamentoTexto = `*💵 Pagamento:* Dinheiro (Troco para R$ ${trocoPara})`;
-        } else {
-          pagamentoTexto = '*💵 Pagamento:* Dinheiro (Não precisa de troco)';
-        }
-      }
-    
-      const textoFormatado = `*🧁 Novo Pedido - Doceria Sávea* 🍪\n\n` +
-        `*Cliente:* ${dadosCliente.nome}\n` +
-        `*WhatsApp:* ${dadosCliente.whatsapp}\n\n` +
-        `${enderecoTexto}\n` +
-        `${agendamentoTexto}\n` +
-        `🔐 *PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
-        `*Itens do Pedido:*\n${itemsTexto}\n` +
-        `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}\n` +
-        `${pagamentoTexto}`;
+  let pagamentoTexto = '';
+  if (formaPagamento === 'pix') {
+    pagamentoTexto = '*Forma de Pagamento:* Pix';
+  } else if (formaPagamento === 'cartao_entrega') {
+    pagamentoTexto = '*Forma de Pagamento:* Cartão na Entrega (Levar Maquininha)';
+  } else if (formaPagamento === 'dinheiro') {
+    if (trocoPara) {
+      pagamentoTexto = `*Forma de Pagamento:* Dinheiro (Troco para R$ ${trocoPara})`;
+    } else {
+      pagamentoTexto = '*Forma de Pagamento:* Dinheiro (Não precisa de troco)';
+    }
+  }
+
+  const textoFormatado = `*Novo Pedido - Doceria Sávea*\n\n` +
+    `*Cliente:* ${dadosCliente.nome}\n` +
+    `*WhatsApp:* ${dadosCliente.whatsapp}\n\n` +
+    `${enderecoTexto}\n` +
+    `${agendamentoTexto}\n` +
+    `*PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
+    `*Itens do Pedido:*\n${itemsTexto}\n` +
+    `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}\n` +
+    `${pagamentoTexto}`;
       
     const numeroWhats = "5514988396568"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
