@@ -48,6 +48,7 @@ export default function CardapioDigital() {
   });
   
   const [experiencia, setExperiencia] = useState('');
+  const [avisoRetirada, setAvisoRetirada] = useState(false);
 
   const alterarQtd = (id: string, operacao: 'mais' | 'menos') => {
     const produto = PRODUTOS.find(p => p.id === id);
@@ -350,47 +351,35 @@ export default function CardapioDigital() {
             <div className="space-y-4 text-center text-sm">
               <p className="text-gray-600 font-medium">Como deseja receber?</p>
               
-              {/* Seleção de Tipo */}
-              {/* Seleção de Tipo */}
               <div className="grid grid-cols-2 gap-2 text-left">
                 <button 
                   onClick={() => {
                     setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'});
-                    alert("Atenção: No momento, as retiradas estão desabilitadas. Retornaremos em breve!");
+                    setAvisoRetirada(true);
                   }} 
                   className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`} 
                   style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
                 >
-                  <p className="font-bold text-gray-900"> Retirada</p>
+                  <p className="font-bold text-gray-900">🏠 Retirada</p>
                 </button>
                 <button 
                   onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})} 
                   className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`} 
                   style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
                 >
-                  <p className="font-bold text-gray-900"> Entrega</p>
+                  <p className="font-bold text-gray-900">🚚 Entrega</p>
                 </button>
               </div>
 
-              {/* Endereço de Retirada (Só aparece se selecionar Retirada) */}
-              {dadosCliente.tipoEntrega === 'Retirada' && (
-                <div className="p-3 bg-blue-50 text-blue-800 rounded-lg text-xs font-bold text-center">
-                  📍 Local: Rua Exemplo, 123 - Bauru/SP<br/>
-                  <a href="https://maps.app.goo.gl/LINK_DO_SEU_MAPS" target="_blank" className="underline mt-1 block">Ver no Google Maps</a>
-                </div>
-              )}
-
-              {/* Aviso de Taxa (Entrega) */}
               {dadosCliente.tipoEntrega === 'Entrega' && (
                 <div className="p-3 bg-yellow-50 text-yellow-800 rounded-lg text-xs font-bold text-center">
                   Taxa fixa de entrega para Bauru: R$ 10,00
                 </div>
               )}
 
-              {/* Input de PIN */}
               {dadosCliente.tipoEntrega && (
                 <div className="text-left">
-                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN de segurança (4 dígitos)</label>
+                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
                   <input 
                     type="number" 
                     value={dadosCliente.pin}
@@ -401,7 +390,6 @@ export default function CardapioDigital() {
                 </div>
               )}
 
-              {/* Botões de Navegação */}
               <div className="flex space-x-2 pt-2">
                 <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
                 <button 
@@ -415,6 +403,7 @@ export default function CardapioDigital() {
               </div>
             </div>
           )}
+
 
 <div className="text-center mt-5 text-[11px] text-gray-400 flex flex-col items-center gap-1">
   <span>Acesse nosso site</span>
@@ -468,6 +457,22 @@ export default function CardapioDigital() {
           </div>
         </div>
       )}
+      {avisoRetirada && (
+  <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl border border-gray-100">
+      <div className="text-4xl mb-3">⚠️</div>
+      <h3 className="font-bold text-lg text-gray-800">Retiradas em breve</h3>
+      <p className="text-sm text-gray-500 mt-2 mb-6">No momento, as retiradas estão desabilitadas. Por favor, escolha a opção de entrega.</p>
+      <button 
+        onClick={() => setAvisoRetirada(false)} 
+        className="w-full py-3 rounded-xl text-white font-medium"
+        style={{ backgroundColor: '#5f6443' }}
+      >
+        Entendido
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 }
