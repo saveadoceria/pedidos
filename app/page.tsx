@@ -211,7 +211,7 @@ export default function CardapioDigital() {
         `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}\n` +
         `${pagamentoTexto}`;
       
-    const numeroWhats = "5514999999999"; 
+    const numeroWhats = "5514988396568"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
 
@@ -371,7 +371,7 @@ export default function CardapioDigital() {
 
               {/* BOTÃO COMPLEMENTAR CONTATO DIRETO WHATSAPP */}
               <button 
-                onClick={() => window.open('https://wa.me/5514999999999', '_blank')}
+                onClick={() => window.open('https://wa.me/5514988396568', '_blank')}
                 className="w-full bg-white font-medium py-3 rounded-xl border border-gray-200 text-sm flex items-center justify-center space-x-2 transition-colors hover:bg-gray-50"
                 style={{ color: '#5f6443', borderColor: '#5f6443' }}
               >
