@@ -320,7 +320,7 @@ export default function CardapioDigital() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">WhatsApp</label>
-                <<input 
+                <input 
   type="number" 
   value={dadosCliente.whatsapp} 
   onChange={e => setDadosCliente({...dadosCliente, whatsapp: e.target.value.replace(/[^0-9]/g, '')})} 
