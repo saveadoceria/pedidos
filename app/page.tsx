@@ -262,35 +262,39 @@ export default function CardapioDigital() {
               })}
 
               {/* TABELA DE SUBTOTAL TOTAL */}
-              <div className="rounded-xl p-4 mt-6 text-xs space-y-2" style={{ backgroundColor: '#fbf7f0' }}>
-                <div className="flex justify-between text-gray-500">
-                  <span>Itens</span>
-                  <span>{totalItens} itens</span>
-                </div>
-                <div className="flex justify-between text-gray-500">
-                  <span>Subtotal</span>
-                  <span>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
-                </div>
-                <div className="flex justify-between text-gray-500">
-                  <span>Entrega</span>
-                  <span>A calcular</span>
-                </div>
-                <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
-                  <span>TOTAL</span>
-                  <span className="text-lg" style={{ color: '#444631' }}>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
-                </div>
+          <div className="sticky bottom-0 bg-white pt-3 pb-2 -mx-6 px-6 border-t border-gray-100 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-40 sm:relative sm:bottom-auto sm:p-0 sm:bg-transparent sm:shadow-none sm:border-0">
+            
+            <div className="rounded-xl p-4 text-xs space-y-2" style={{ backgroundColor: '#fbf7f0' }}>
+              <div className="flex justify-between text-gray-500">
+                <span>Itens</span>
+                <span>{totalItens} itens</span>
               </div>
+              <div className="flex justify-between text-gray-500">
+                <span>Subtotal</span>
+                <span>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+              </div>
+              <div className="flex justify-between text-gray-500">
+                <span>Entrega</span>
+                <span>A calcular</span>
+              </div>
+              <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
+                <span>TOTAL</span>
+                <span className="text-lg" style={{ color: '#444631' }}>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+              </div>
+            </div>
 
-              {/* BOTÃO PRINCIPAL VERDE MILITAR */}
-              <button 
-                disabled={totalItens === 0}
-                onClick={() => setPasso(2)}
-                className="w-full text-white font-medium py-3 rounded-xl mt-4 transition-colors disabled:opacity-50 flex items-center justify-center space-x-1"
-                style={{ backgroundColor: '#5f6443' }}
-              >
-                <span>Continuar</span>
-                <span>→</span>
-              </button>
+            {/* BOTÃO PRINCIPAL VERDE MILITAR */}
+            <button 
+              disabled={totalItens === 0}
+              onClick={() => setPasso(2)}
+              className="w-full text-white font-medium py-3 rounded-xl mt-3 transition-colors disabled:opacity-50 flex items-center justify-center space-x-1"
+              style={{ backgroundColor: '#5f6443' }}
+            >
+              <span>Continuar</span>
+              <span>→</span>
+            </button>
+
+          </div>
 
               {/* BOTÃO COMPLEMENTAR CONTATO DIRETO WHATSAPP */}
               <button 
