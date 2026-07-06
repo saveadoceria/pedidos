@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TailwindScript = () => (
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
@@ -52,6 +52,13 @@ export default function CardapioDigital() {
   
   const [experiencia, setExperiencia] = useState('');
   const [avisoRetirada, setAvisoRetirada] = useState(false);
+
+  useEffect(() => {
+    const dadosSalvos = localStorage.getItem('clienteSalvo');
+    if (dadosSalvos) {
+      setDadosCliente(JSON.parse(dadosSalvos));
+    }
+  }, []);
 
   const alterarQtd = (id: string, operacao: 'mais' | 'menos') => {
     const produto = PRODUTOS.find(p => p.id === id);
@@ -323,35 +330,61 @@ export default function CardapioDigital() {
 
           {/* PASSO 2: FORMULÁRIO DADOS */}
           {passo === 2 && (
-            <div className="space-y-4 text-sm">
-              <div>
-                <label className="block text-xs font-bold text-gray-600 mb-1">Nome completo</label>
-                <input type="text" value={dadosCliente.nome} onChange={e => setDadosCliente({...dadosCliente, nome: e.target.value})} placeholder="Seu nome" className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-green-700" />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-600 mb-1">WhatsApp</label>
-                <input type="text" value={dadosCliente.whatsapp} onChange={e => setDadosCliente({...dadosCliente, whatsapp: e.target.value})} placeholder="(00) 00000-0000" className="w-full p-3 border border-gray-200 rounded-xl outline-none" />
-              </div>
-              <div className="flex space-x-2">
-                <div className="w-1/2">
-                  <label className="block text-xs font-bold text-gray-600 mb-1">Data</label>
-                  <input type="date" value={dadosCliente.data} onChange={e => setDadosCliente({...dadosCliente, data: e.target.value})} className="w-full p-3 border border-gray-200 rounded-xl outline-none" />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-xs font-bold text-gray-600 mb-1">Horário</label>
-                  <input type="time" value={dadosCliente.horario} onChange={e => setDadosCliente({...dadosCliente, horario: e.target.value})} className="w-full p-3 border border-gray-200 rounded-xl outline-none" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-600 mb-1">Observações (opcional)</label>
-                <textarea value={dadosCliente.observacoes} onChange={e => setDadosCliente({...dadosCliente, observacoes: e.target.value})} placeholder="Alguma preferência?" className="w-full p-3 border border-gray-200 rounded-xl outline-none h-16 resize-none" />
-              </div>
-              <div className="flex space-x-2 pt-2">
-                <button onClick={() => setPasso(1)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50">Voltar</button>
-                <button disabled={!dadosCliente.nome || !dadosCliente.whatsapp} onClick={() => setPasso(3)} className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" style={{ backgroundColor: '#5f6443' }}>Continuar</button>
-              </div>
-            </div>
-          )}
+  <div className="space-y-4">
+    <p className="text-gray-600 font-medium">Informe seus dados:</p>
+    
+    <input 
+      type="text" 
+      placeholder="Nome completo" 
+      className="w-full p-3 border border-gray-200 rounded-xl"
+      value={dadosCliente.nome}
+      onChange={(e) => setDadosCliente({...dadosCliente, nome: e.target.value})}
+    />
+    
+    <input 
+      type="tel" 
+      placeholder="WhatsApp (com DDD)" 
+      className="w-full p-3 border border-gray-200 rounded-xl"
+      value={dadosCliente.whatsapp}
+      onChange={(e) => setDadosCliente({...dadosCliente, whatsapp: e.target.value})}
+    />
+
+    <div className="flex items-center space-x-2 py-2">
+      <input 
+        type="checkbox" 
+        id="salvarDados" 
+        className="w-5 h-5"
+        onChange={(e) => {
+          if (e.target.checked) {
+            localStorage.setItem('clienteSalvo', JSON.stringify(dadosCliente));
+          } else {
+            localStorage.removeItem('clienteSalvo');
+          }
+        }}
+      />
+      <label htmlFor="salvarDados" className="text-sm text-gray-600">
+        Salvar meus dados para a próxima
+      </label>
+    </div>
+
+    <div className="flex space-x-2 pt-2">
+      <button 
+        onClick={() => setPasso(1)} 
+        className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1"
+      >
+        Voltar
+      </button>
+      <button 
+        disabled={!dadosCliente.nome || !dadosCliente.whatsapp}
+        onClick={() => setPasso(3)}
+        className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50"
+        style={{ backgroundColor: '#5f6443' }}
+      >
+        Continuar
+      </button>
+    </div>
+  </div>
+)}
 
           {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
           {passo === 3 && (
