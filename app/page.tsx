@@ -345,21 +345,61 @@ export default function CardapioDigital() {
             </div>
           )}
 
-          {/* PASSO 3: EXPERIÊNCIA / ENTREGA */}
+          {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
           {passo === 3 && (
             <div className="space-y-4 text-center text-sm">
-              <p className="text-gray-600 font-medium">Como deseja consumir seus cookies?</p>
-              <div className="space-y-2 text-left">
-                <button onClick={() => setExperiencia('Vou comer logo após a retirada')} className={`w-full p-3 border rounded-xl block ${experiencia === 'Vou comer logo após a retirada' ? 'bg-gray-50' : ''}`} style={{ borderColor: experiencia === 'Vou comer logo após a retirada' ? '#5f6443' : '#e5e7eb' }}>
-                  <p className="font-bold text-gray-900">🍴 Vou comer logo após a retirada</p>
+              <p className="text-gray-600 font-medium">Como deseja receber?</p>
+              
+              {/* Seleção de Tipo */}
+              <div className="grid grid-cols-2 gap-2 text-left">
+                <button 
+                  onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'})} 
+                  className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`} 
+                  style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
+                >
+                  <p className="font-bold text-gray-900">🏠 Retirada</p>
                 </button>
-                <button onClick={() => setExperiencia('Vou comer mais tarde')} className={`w-full p-3 border rounded-xl block ${experiencia === 'Vou comer mais tarde' ? 'bg-gray-50' : ''}`} style={{ borderColor: experiencia === 'Vou comer mais tarde' ? '#5f6443' : '#e5e7eb' }}>
-                  <p className="font-bold text-gray-900">❄️ Vou comer mais tarde</p>
+                <button 
+                  onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})} 
+                  className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`} 
+                  style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
+                >
+                  <p className="font-bold text-gray-900">🚚 Entrega</p>
                 </button>
               </div>
+
+              {/* Aviso de Taxa */}
+              {dadosCliente.tipoEntrega === 'Entrega' && (
+                <div className="p-3 bg-yellow-50 text-yellow-800 rounded-lg text-xs font-bold text-center">
+                  Taxa fixa de entrega para Bauru: R$ 10,00
+                </div>
+              )}
+
+              {/* Input de PIN */}
+              {dadosCliente.tipoEntrega && (
+                <div className="text-left">
+                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
+                  <input 
+                    type="number" 
+                    value={dadosCliente.pin}
+                    placeholder="Ex: 1234" 
+                    className="w-full p-3 border border-gray-200 rounded-xl outline-none"
+                    onChange={e => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
+                  />
+                </div>
+              )}
+
+              {/* Botões de Navegação */}
               <div className="flex space-x-2 pt-2">
-                <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50">Voltar</button>
-                <button disabled={!experiencia} onClick={finalizarPedido} className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" style={{ backgroundColor: '#5f6443' }}>Confirmar pedido</button>
+                <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
+                <button 
+                  disabled={!dadosCliente.tipoEntrega || dadosCliente.pin.length < 4} 
+                  onClick={finalizarPedido} 
+                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
+                  style={{ backgroundColor: '#5f6443' }}
+                >
+                  Confirmar pedido
+                </button>
               </div>
             </div>
           )}
