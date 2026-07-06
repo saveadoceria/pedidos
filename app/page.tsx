@@ -42,7 +42,9 @@ export default function CardapioDigital() {
     whatsapp: '', 
     data: dataFormatada, 
     horario: horarioFormatado, 
-    observacoes: ''
+    observacoes: '',
+    tipoEntrega: '', 
+    pin: ''
   });
   
   const [experiencia, setExperiencia] = useState('');
