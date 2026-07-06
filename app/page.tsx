@@ -38,13 +38,16 @@ export default function CardapioDigital() {
   const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); // Gera 'HH:MM'
 
   const [dadosCliente, setDadosCliente] = useState({
-    nome: '', 
-    whatsapp: '', 
-    data: dataFormatada, 
-    horario: horarioFormatado, 
+    nome: '',
+    whatsapp: '',
+    data: dataFormatada,
+    horario: horarioFormatado,
     observacoes: '',
-    tipoEntrega: '', 
-    pin: ''
+    tipoEntrega: '',
+    pin: '',
+    endereco: '',
+    tipoImovel: '',
+    obsEntregador: ''
   });
   
   const [experiencia, setExperiencia] = useState('');
@@ -141,6 +144,9 @@ export default function CardapioDigital() {
       `*Cliente:* ${dadosCliente.nome}\n` +
       `*WhatsApp:* ${dadosCliente.whatsapp}\n` +
       `*Entrega/Retirada:* ${dadosCliente.tipoEntrega}\n` +
+      (dadosCliente.tipoEntrega === 'Entrega' ? 
+        `*Endereço:* ${dadosCliente.endereco} (${dadosCliente.tipoImovel})\n` +
+        `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '') +
       `*PIN de Segurança:* ${dadosCliente.pin}\n` +
       `*Data/Hora:* ${dadosCliente.data} às ${dadosCliente.horario}\n` +
       `*Preferência:* ${experiencia}\n` +
@@ -378,18 +384,48 @@ export default function CardapioDigital() {
                 </div>
               )}
 
-              {dadosCliente.tipoEntrega && (
-                <div className="text-left">
-                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
-                  <input 
-                    type="number" 
-                    value={dadosCliente.pin}
-                    placeholder="Ex: 1234" 
-                    className="w-full p-3 border border-gray-200 rounded-xl outline-none"
-                    onChange={e => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
-                  />
-                </div>
-              )}
+{dadosCliente.tipoEntrega === 'Entrega' && (
+    <div className="space-y-3 mt-3">
+      <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
+        ⏰ Tempo estimado de entrega: 40 a 60 min.
+      </p>
+
+      <input 
+        type="text"
+        placeholder="Endereço completo" 
+        className="w-full p-3 border border-gray-200 rounded-xl"
+        value={dadosCliente.endereco}
+        onChange={(e) => setDadosCliente({...dadosCliente, endereco: e.target.value})}
+      />
+
+      <select 
+        className="w-full p-3 border border-gray-200 rounded-xl"
+        value={dadosCliente.tipoImovel}
+        onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}
+      >
+        <option value="">Tipo de imóvel</option>
+        <option value="Casa">Casa</option>
+        <option value="Apartamento">Apartamento</option>
+        <option value="Comercial">Comercial</option>
+      </select>
+
+      <textarea 
+        placeholder="Obs. para o entregador (ex: portão azul)" 
+        className="w-full p-3 border border-gray-200 rounded-xl"
+        value={dadosCliente.obsEntregador}
+        onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})}
+      />
+
+      <label className="block text-xs font-bold text-gray-600 mt-2">Defina seu PIN (4 dígitos)</label>
+      <input 
+        type="number"
+        value={dadosCliente.pin}
+        placeholder="Ex: 1234"
+        className="w-full p-3 border border-gray-200 rounded-xl outline-none"
+        onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})}
+      />
+    </div>
+  )}
 
               <div className="flex space-x-2 pt-2">
                 <button onClick={() => setPasso(2)} className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1">Voltar</button>
