@@ -7,7 +7,7 @@ const TailwindScript = () => (
 );
 
 const PRODUTOS = [
-  { id: 'tradicional', nome: 'Cookie Tradicional', desc: 'Com gotas de chocolate', preco: 10.90, duplo: 21.00 },
+  { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades', preco: 10.00, duplo: 18.00 },
   { id: 'nutella', nome: 'Cookie Nutella', desc: 'Recheado com Nutella', preco: 14.90, duplo: 28.00 },
   { id: 'kitkat', nome: 'Cookie KitKat', desc: 'Creme de KitKat', preco: 18.90, duplo: 36.00 },
   { id: 'pringles', nome: 'Cookie Pringles', desc: 'Recheado com Chocolate Nobre e Pringles', preco: 18.90, duplo: 36.00 },
