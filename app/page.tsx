@@ -180,12 +180,8 @@ export default function CardapioDigital() {
     ? `*Agendado para:* ${dadosCliente.data} às ${dadosCliente.horario}`
     : `*Entrega:* Imediata`;
 
-  const enderecoTexto = dadosCliente.tipoEntrega === 'Entrega'
-    ? `*Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n` +
-      `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.Cidade || 'Bauru'}\n` +
-      (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
-      `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
-      (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '')
+    const enderecoTexto = dadosCliente.tipoEntrega === 'Entrega'
+    ? `*Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.Cidade || 'Bauru'}\n${dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : ''}*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n${dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : ''}`
     : `*Retirada no Local*`;
 
   let pagamentoTexto = '';
