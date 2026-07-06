@@ -363,7 +363,7 @@ export default function CardapioDigital() {
         }}
       />
       <label htmlFor="salvarDados" className="text-sm text-gray-600">
-        Salvar meus dados para a próxima
+        Salvar meus dados para a próxima compra
       </label>
     </div>
 
