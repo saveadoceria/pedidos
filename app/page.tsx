@@ -351,9 +351,13 @@ export default function CardapioDigital() {
               <p className="text-gray-600 font-medium">Como deseja receber?</p>
               
               {/* Seleção de Tipo */}
+              {/* Seleção de Tipo */}
               <div className="grid grid-cols-2 gap-2 text-left">
                 <button 
-                  onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'})} 
+                  onClick={() => {
+                    setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'});
+                    alert("Atenção: No momento, as retiradas estão desabilitadas. Retornaremos em breve!");
+                  }} 
                   className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`} 
                   style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
                 >
@@ -368,7 +372,15 @@ export default function CardapioDigital() {
                 </button>
               </div>
 
-              {/* Aviso de Taxa */}
+              {/* Endereço de Retirada (Só aparece se selecionar Retirada) */}
+              {dadosCliente.tipoEntrega === 'Retirada' && (
+                <div className="p-3 bg-blue-50 text-blue-800 rounded-lg text-xs font-bold text-center">
+                  📍 Local: Rua Exemplo, 123 - Bauru/SP<br/>
+                  <a href="https://maps.app.goo.gl/LINK_DO_SEU_MAPS" target="_blank" className="underline mt-1 block">Ver no Google Maps</a>
+                </div>
+              )}
+
+              {/* Aviso de Taxa (Entrega) */}
               {dadosCliente.tipoEntrega === 'Entrega' && (
                 <div className="p-3 bg-yellow-50 text-yellow-800 rounded-lg text-xs font-bold text-center">
                   Taxa fixa de entrega para Bauru: R$ 10,00
