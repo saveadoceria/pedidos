@@ -11,6 +11,7 @@ const PRODUTOS = [
   { id: 'kitkat', nome: 'Cookie KitKat', desc: 'Creme de KitKat', preco: 18.90, duplo: 36.00, foto: '/cookie-kitkat.png' },
   { id: 'pringles', nome: 'Cookie Pringles', desc: 'Recheado com Chocolate Nobre e Pringles', preco: 18.90, duplo: 36.00, foto: '/cookie-pringles.png' },
 ];
+const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais'];
 
 export default function CardapioDigital() {
   const [passo, setPasso] = useState(1);
