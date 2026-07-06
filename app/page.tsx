@@ -115,7 +115,7 @@ export default function CardapioDigital() {
   const { totalItens, valorTotal } = calcularTotal();
 
   const finalizarPedido = () => {
-    let itensTexto = '';
+    let itemsTexto = '';
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id];
       if (qtd > 0) {
