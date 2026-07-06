@@ -64,7 +64,7 @@ export default function CardapioDigital() {
       }
     });
 
-    const textoFormatado = `*Novo Pedido - Santo Cookie* 🍪\n\n` +
+    const textoFormatado = `*Novo Pedido - Doceria Sávea* 🍪\n\n` +
       `*Cliente:* ${dadosCliente.nome}\n` +
       `*WhatsApp:* ${dadosCliente.whatsapp}\n` +
       `*Retirada:* ${dadosCliente.data} às ${dadosCliente.horario}\n` +
@@ -73,7 +73,7 @@ export default function CardapioDigital() {
       `*Itens do Pedido:*\n${itensTexto}\n` +
       `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
 
-    const numeroWhats = "5514999999999"; // Lembre de por seu número aqui
+    const numeroWhats = "5514988396568"; // Lembre de por seu número aqui
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
 
