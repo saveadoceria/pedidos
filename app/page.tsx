@@ -52,6 +52,7 @@ export default function CardapioDigital() {
     horario: '',
     pin: '',
     obsEntregador: '',
+    tipoImovel: '',
     observacoes: ''
   });
   
@@ -172,20 +173,28 @@ export default function CardapioDigital() {
       }
     });
 
+    const agendamentoTexto = dadosCliente.agendamento === 'agendado' 
+      ? `📅 *Agendado para:* ${dadosCliente.data} às ${dadosCliente.horario}`
+      : `⚡ *Entrega:* Imediata`;
+
+    const enderecoTexto = dadosCliente.tipoEntrega === 'Entrega'
+      ? `📍 *Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n` +
+        `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.cidade}\n` +
+        (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
+        `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
+        (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '')
+      : `🏠 *Retirada no Local*`;
+
     const textoFormatado = `*Novo Pedido - Doceria Sávea* 🍪\n\n` +
       `*Cliente:* ${dadosCliente.nome}\n` +
-      `*WhatsApp:* ${dadosCliente.whatsapp}\n` +
-      `*Entrega/Retirada:* ${dadosCliente.tipoEntrega}\n` +
-      (dadosCliente.tipoEntrega === 'Entrega' ? 
-        `*Endereço:* ${dadosCliente.endereco} (${dadosCliente.tipoImovel})\n` +
-        `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '') +
-      `*PIN de Segurança:* ${dadosCliente.pin}\n` +
-      `*Data/Hora:* ${dadosCliente.data} às ${dadosCliente.horario}\n` +
-      `*Preferência:* ${experiencia}\n` +
-      `${dadosCliente.observacoes ? `*Obs:* ${dadosCliente.observacoes}\n` : ''}\n` +
+      `*WhatsApp:* ${dadosCliente.whatsapp}\n\n` +
+      `${enderecoTexto}\n` +
+      `${agendamentoTexto}\n` +
+      `🔒 *PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
       `*Itens do Pedido:*\n${itemsTexto}\n` +
       `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
-      const numeroWhats = "5514999999999"; 
+      
+    const numeroWhats = "5514999999999"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
 
@@ -304,39 +313,39 @@ export default function CardapioDigital() {
               })}
 
               {/* TABELA DE SUBTOTAL TOTAL */}
-          <div className="sticky bottom-0 bg-white pt-3 pb-2 -mx-6 px-6 border-t border-gray-100 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-40 sm:relative sm:bottom-auto sm:p-0 sm:bg-transparent sm:shadow-none sm:border-0">
-            
-            <div className="rounded-xl p-4 text-xs space-y-2" style={{ backgroundColor: '#fbf7f0' }}>
-              <div className="flex justify-between text-gray-500">
-                <span>Itens</span>
-                <span>{totalItens} itens</span>
-              </div>
-              <div className="flex justify-between text-gray-500">
-                <span>Subtotal</span>
-                <span>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
-              </div>
-              <div className="flex justify-between text-gray-500">
-                <span>Entrega</span>
-                <span>A calcular</span>
-              </div>
-              <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
-                <span>TOTAL</span>
-                <span className="text-lg" style={{ color: '#444631' }}>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
-              </div>
-            </div>
+              <div className="sticky bottom-0 bg-white pt-3 pb-2 -mx-6 px-6 border-t border-gray-100 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-40 sm:relative sm:bottom-auto sm:p-0 sm:bg-transparent sm:shadow-none sm:border-0">
+                
+                <div className="rounded-xl p-4 text-xs space-y-2" style={{ backgroundColor: '#fbf7f0' }}>
+                  <div className="flex justify-between text-gray-500">
+                    <span>Itens</span>
+                    <span>{totalItens} itens</span>
+                  </div>
+                  <div className="flex justify-between text-gray-500">
+                    <span>Subtotal</span>
+                    <span>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-500">
+                    <span>Entrega</span>
+                    <span>A calcular</span>
+                  </div>
+                  <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
+                    <span>TOTAL</span>
+                    <span className="text-lg" style={{ color: '#444631' }}>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                </div>
 
-            {/* BOTÃO PRINCIPAL VERDE MILITAR */}
-            <button 
-              disabled={totalItens === 0}
-              onClick={() => setPasso(2)}
-              className="w-full text-white font-medium py-3 rounded-xl mt-3 transition-colors disabled:opacity-50 flex items-center justify-center space-x-1"
-              style={{ backgroundColor: '#5f6443' }}
-            >
-              <span>Continuar</span>
-              <span>→</span>
-            </button>
+                {/* BOTÃO PRINCIPAL VERDE MILITAR */}
+                <button 
+                  disabled={totalItens === 0}
+                  onClick={() => setPasso(2)}
+                  className="w-full text-white font-medium py-3 rounded-xl mt-3 transition-colors disabled:opacity-50 flex items-center justify-center space-x-1"
+                  style={{ backgroundColor: '#5f6443' }}
+                >
+                  <span>Continuar</span>
+                  <span>→</span>
+                </button>
 
-          </div>
+              </div>
 
               {/* BOTÃO COMPLEMENTAR CONTATO DIRETO WHATSAPP */}
               <button 
@@ -344,10 +353,9 @@ export default function CardapioDigital() {
                 className="w-full bg-white font-medium py-3 rounded-xl border border-gray-200 text-sm flex items-center justify-center space-x-2 transition-colors hover:bg-gray-50"
                 style={{ color: '#5f6443', borderColor: '#5f6443' }}
               >
-                {/* ÍCONE VETORIAL DO WHATSAPP */}
-          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.488 1.451 5.416 1.452 5.347 0 9.7-4.35 9.704-9.7.002-2.592-1.007-5.029-2.844-6.867-1.837-1.837-4.275-2.846-6.87-2.847-5.353 0-9.707 4.35-9.712 9.7-.001 1.977.521 3.908 1.512 5.626l-.995 3.637 3.73-.978zm11.387-5.463c-.312-.156-1.848-.912-2.129-1.015-.282-.102-.487-.156-.69.156-.204.311-.79.99-.968 1.194-.179.204-.358.228-.67.072-1.442-.718-2.39-1.184-3.342-2.823-.252-.433.252-.402.721-1.336.078-.156.039-.294-.02-.45-.058-.156-.487-1.174-.667-1.607-.176-.423-.351-.365-.487-.372-.125-.006-.27-.007-.413-.007-.144 0-.379.054-.577.27-.198.216-.755.738-.755 1.8 0 1.061.773 2.086.88 2.232.109.146 1.522 2.323 3.687 3.257 1.796.774 2.164.62 2.554.583.389-.036 1.254-.512 1.431-1.006.177-.494.177-.917.123-1.006-.054-.09-.204-.144-.516-.3z"/>
-          </svg>
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.488 1.451 5.416 1.452 5.347 0 9.7-4.35 9.704-9.7.002-2.592-1.007-5.029-2.844-6.867-1.837-1.837-4.275-2.846-6.87-2.847-5.353 0-9.707 4.35-9.712 9.7-.001 1.977.521 3.908 1.512 5.626l-.995 3.637 3.73-.978zm11.387-5.463c-.312-.156-1.848-.912-2.129-1.015-.282-.102-.487-.156-.69.156-.204.311-.79.99-.968 1.194-.179.204-.358.228-.67.072-1.442-.718-2.39-1.184-3.342-2.823-.252-.433.252-.402.721-1.336.078-.156.039-.294-.02-.45-.058-.156-.487-1.174-.667-1.607-.176-.423-.351-.365-.487-.372-.125-.006-.27-.007-.413-.007-.144 0-.379.054-.577.27-.198.216-.755.738-.755 1.8 0 1.061.773 2.086.88 2.232.109.146 1.522 2.323 3.687 3.257 1.796.774 2.164.62 2.554.583.389-.036 1.254-.512 1.431-1.006.177-.494.177-.917.123-1.006-.054-.09-.204-.144-.516-.3z"/>
+                </svg>
                 <span>Falar diretamente pelo WhatsApp</span>
               </button>
             </div>
@@ -355,144 +363,146 @@ export default function CardapioDigital() {
 
           {/* PASSO 2: FORMULÁRIO DADOS */}
           {passo === 2 && (
-  <div className="space-y-4">
-    <p className="text-gray-600 font-medium">Informe seus dados:</p>
-    
-    <input 
-      type="text" 
-      placeholder="Nome completo" 
-      className="w-full p-3 border border-gray-200 rounded-xl"
-      value={dadosCliente.nome}
-      onChange={(e) => setDadosCliente({...dadosCliente, nome: e.target.value})}
-    />
-    
-    <input 
-      type="tel" 
-      placeholder="WhatsApp (com DDD)" 
-      className="w-full p-3 border border-gray-200 rounded-xl"
-      value={dadosCliente.whatsapp}
-      onChange={(e) => setDadosCliente({...dadosCliente, whatsapp: e.target.value})}
-    />
+            <div className="space-y-4">
+              <p className="text-gray-600 font-medium">Informe seus dados:</p>
+              
+              <input 
+                type="text" 
+                placeholder="Nome completo" 
+                className="w-full p-3 border border-gray-200 rounded-xl"
+                value={dadosCliente.nome}
+                onChange={(e) => setDadosCliente({...dadosCliente, nome: e.target.value})}
+              />
+              
+              <input 
+                type="tel" 
+                placeholder="WhatsApp (com DDD)" 
+                className="w-full p-3 border border-gray-200 rounded-xl"
+                value={dadosCliente.whatsapp}
+                onChange={(e) => setDadosCliente({...dadosCliente, whatsapp: e.target.value})}
+              />
 
-    <div className="flex items-center space-x-2 py-2">
-      <input 
-        type="checkbox" 
-        id="salvarDados" 
-        className="w-5 h-5"
-        onChange={(e) => {
-          if (e.target.checked) {
-            localStorage.setItem('clienteSalvo', JSON.stringify(dadosCliente));
-          } else {
-            localStorage.removeItem('clienteSalvo');
-          }
-        }}
-      />
-      <label htmlFor="salvarDados" className="text-sm text-gray-600">
-        Salvar meus dados para a próxima compra
-      </label>
-    </div>
+              <div className="flex items-center space-x-2 py-2">
+                <input 
+                  type="checkbox" 
+                  id="salvarDados" 
+                  className="w-5 h-5"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      localStorage.setItem('clienteSalvo', JSON.stringify(dadosCliente));
+                    } else {
+                      localStorage.removeItem('clienteSalvo');
+                    }
+                  }}
+                />
+                <label htmlFor="salvarDados" className="text-sm text-gray-600">
+                  Salvar meus dados para a próxima compra
+                </label>
+              </div>
 
-    <div className="flex space-x-2 pt-2">
-      <button 
-        onClick={() => setPasso(1)} 
-        className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1"
-      >
-        Voltar
-      </button>
-      <button 
-        disabled={!dadosCliente.nome || !dadosCliente.whatsapp}
-        onClick={() => setPasso(3)}
-        className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50"
-        style={{ backgroundColor: '#5f6443' }}
-      >
-        Continuar
-      </button>
-    </div>
-  </div>
-)}
+              <div className="flex space-x-2 pt-2">
+                <button 
+                  onClick={() => setPasso(1)} 
+                  className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1"
+                >
+                  Voltar
+                </button>
+                <button 
+                  disabled={!dadosCliente.nome || !dadosCliente.whatsapp}
+                  onClick={() => setPasso(3)}
+                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50"
+                  style={{ backgroundColor: '#5f6443' }}
+                >
+                  Continuar
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
-{passo === 3 && (
-  <div className="space-y-4 text-center text-sm">
-    <p className="font-medium text-gray-600">Como deseja receber?</p>
-    <div className="grid grid-cols-2 gap-2 text-left">
-      <button 
-        onClick={() => { setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'}); setAvisoRetirada(true); }}
-        className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`}
-        style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
-      >
-        <p className="font-bold text-gray-900">🏠 Retirada</p>
-      </button>
-      <button 
-        onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})}
-        className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`}
-        style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
-      >
-        <p className="font-bold text-gray-900">🛵 Entrega</p>
-      </button>
-    </div>
+          {passo === 3 && (
+            <div className="space-y-4 text-center text-sm">
+              <p className="font-medium text-gray-600">Como deseja receber?</p>
+              <div className="grid grid-cols-2 gap-2 text-left">
+                <button 
+                  onClick={() => { setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'}); setAvisoRetirada(true); }}
+                  className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`}
+                  style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
+                >
+                  <p className="font-bold text-gray-900">🏠 Retirada</p>
+                </button>
+                <button 
+                  onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})}
+                  className={`w-full p-3 border rounded-xl ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`}
+                  style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
+                >
+                  <p className="font-bold text-gray-900">🛵 Entrega</p>
+                </button>
+              </div>
 
-    {/* CAMPOS DE ENTREGA */}
-    {dadosCliente.tipoEntrega === 'Entrega' && (
-      <div className="space-y-3 text-left animate-in fade-in">
-        <input 
-          placeholder="Digite seu CEP" 
-          className="w-full p-3 border border-gray-200 rounded-xl"
-          value={dadosCliente.cep}
-          onChange={(e) => { setDadosCliente({...dadosCliente, cep: e.target.value}); buscarCep(e.target.value); }}
-        />
-        <div className="grid grid-cols-2 gap-2">
-          <input placeholder="Rua" className="p-3 border rounded-xl bg-gray-50" value={dadosCliente.rua} readOnly />
-          <input placeholder="Nº" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, numero: e.target.value})} />
+              {/* CAMPOS DE ENTREGA */}
+              {dadosCliente.tipoEntrega === 'Entrega' && (
+                <div className="space-y-3 text-left animate-in fade-in">
+                  <input 
+                    placeholder="Digite seu CEP" 
+                    className="w-full p-3 border border-gray-200 rounded-xl"
+                    value={dadosCliente.cep}
+                    onChange={(e) => { setDadosCliente({...dadosCliente, cep: e.target.value}); buscarCep(e.target.value); }}
+                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <input placeholder="Rua" className="p-3 border rounded-xl bg-gray-50" value={dadosCliente.rua} readOnly />
+                    <input placeholder="Nº" className="p-3 border rounded-xl" value={dadosCliente.numero} onChange={(e) => setDadosCliente({...dadosCliente, numero: e.target.value})} />
+                  </div>
+                  <input placeholder="Bairro" className="w-full p-3 border rounded-xl bg-gray-50" value={dadosCliente.bairro} readOnly />
+                  <input placeholder="Complemento" className="w-full p-3 border rounded-xl" value={dadosCliente.complemento} onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
+                  
+                  <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
+                    ⏰ Tempo estimado: 40 a 60 min.
+                  </p>
+
+                  <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
+                    <option value="imediato">Entrega Imediata</option>
+                    <option value="agendado">Agendar para outro dia/hora</option>
+                  </select>
+
+                  {dadosCliente.agendamento === 'agendado' && (
+                    <div className="grid grid-cols-2 gap-2">
+                      <input type="date" className="p-3 border rounded-xl" value={dadosCliente.data} onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} />
+                      <input type="time" className="p-3 border rounded-xl" value={dadosCliente.horario} onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} />
+                    </div>
+                  )}
+
+                  <select className="w-full p-3 border rounded-xl" value={dadosCliente.tipoImovel} onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}>
+                    <option value="">Tipo de imóvel</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Apartamento">Apartamento</option>
+                    <option value="Comercial">Comercial</option>
+                  </select>
+
+                  <textarea placeholder="Obs. para o entregador" className="w-full p-3 border rounded-xl h-20" value={dadosCliente.obsEntregador} onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})} />
+
+                  <label className="block text-xs font-bold text-gray-600">Defina seu PIN (4 dígitos)</label>
+                  <input type="number" placeholder="1234" value={dadosCliente.pin} className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})} />
+                </div>
+              )}
+
+              {/* BOTÕES DE CONTROLE */}
+              <div className="flex space-x-2 pt-4">
+                <button onClick={() => setPasso(2)} className="px-4 py-3 border rounded-xl bg-gray-50 flex-1">Voltar</button>
+                <button 
+                  onClick={finalizarPedido} 
+                  disabled={dadosCliente.tipoEntrega === 'Entrega' && (!dadosCliente.pin || dadosCliente.pin.length < 4)}
+                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
+                  style={{ backgroundColor: '#5f6443' }}
+                >
+                  Confirmar Pedido
+                </button>
+              </div>
+            </div>
+          )}
+
         </div>
-        <input placeholder="Bairro" className="w-full p-3 border rounded-xl bg-gray-50" value={dadosCliente.bairro} readOnly />
-        <input placeholder="Complemento" className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
-        
-        <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
-          ⏰ Tempo estimado: 40 a 60 min.
-        </p>
 
-        <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
-          <option value="imediato">Entrega Imediata</option>
-          <option value="agendado">Agendar para outro dia/hora</option>
-        </select>
-
-        {dadosCliente.agendamento === 'agendado' && (
-          <div className="grid grid-cols-2 gap-2">
-            <input type="date" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} />
-            <input type="time" className="p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} />
-          </div>
-        )}
-
-        <select className="w-full p-3 border rounded-xl" value={dadosCliente.tipoImovel} onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}>
-          <option value="">Tipo de imóvel</option>
-          <option value="Casa">Casa</option>
-          <option value="Apartamento">Apartamento</option>
-          <option value="Comercial">Comercial</option>
-        </select>
-
-        <textarea placeholder="Obs. para o entregador" className="w-full p-3 border rounded-xl h-20" onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})} />
-
-        <label className="block text-xs font-bold text-gray-600">Defina seu PIN (4 dígitos)</label>
-        <input type="number" placeholder="1234" className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})} />
-      </div>
-    )}
-
-    {/* BOTÕES DE CONTROLE */}
-    <div className="flex space-x-2 pt-4">
-      <button onClick={() => setPasso(2)} className="px-4 py-3 border rounded-xl bg-gray-50 flex-1">Voltar</button>
-      <button 
-        onClick={finalizarPedido} 
-        disabled={dadosCliente.tipoEntrega === 'Entrega' && (!dadosCliente.pin || dadosCliente.pin.length < 4)}
-        className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
-        style={{ backgroundColor: '#5f6443' }}
-      >
-        Confirmar Pedido
-      </button>
-    </div>
-  </div>
-)}
-        
         {/* RODAPÉ MARCA */}
         <div className="text-center text-[10px] text-gray-400 pt-2 flex flex-col items-center justify-center space-y-1">
           <span>🌿</span>
@@ -510,7 +520,6 @@ export default function CardapioDigital() {
               <p className="text-xs text-gray-400 mt-0.5">Selecione o sabor para a unidade {modalSabor.itemIndex}</p>
             </div>
             
-            {/* Lista com os botões de sabores */}
             <div className="space-y-2">
               {SABORES_RECHEIO.map(sabor => (
                 <button
@@ -524,7 +533,6 @@ export default function CardapioDigital() {
               ))}
             </div>
 
-            {/* Botão de Cancelar */}
             <button
               onClick={() => setModalSabor({ aberto: false, produtoId: null, itemIndex: 0 })}
               className="w-full mt-4 text-center py-2 text-xs font-semibold text-gray-400 hover:text-gray-600"
@@ -534,22 +542,24 @@ export default function CardapioDigital() {
           </div>
         </div>
       )}
+
       {avisoRetirada && (
-  <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-4 z-50">
-    <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl border border-gray-100">
-      <div className="text-4xl mb-3">⚠️</div>
-      <h3 className="font-bold text-lg text-gray-800">Retiradas em breve</h3>
-      <p className="text-sm text-gray-500 mt-2 mb-6">No momento, as retiradas estão desabilitadas. Por favor, escolha a opção de entrega.</p>
-      <button 
-        onClick={() => setAvisoRetirada(false)} 
-        className="w-full py-3 rounded-xl text-white font-medium"
-        style={{ backgroundColor: '#5f6443' }}
-      >
-        Entendido
-      </button>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl border border-gray-100">
+            <div className="text-4xl mb-3">⚠️</div>
+            <h3 className="font-bold text-lg text-gray-800">Retiradas em breve</h3>
+            <p className="text-sm text-gray-500 mt-2 mb-6">No momento, as retiradas estão desabilitadas. Por favor, escolha a opção de entrega.</p>
+            <button 
+              onClick={() => setAvisoRetirada(false)} 
+              className="w-full py-3 rounded-xl text-white font-medium"
+              style={{ backgroundColor: '#5f6443' }}
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
-  </div>
-)}
-    </div>
-  </div>
-);
+  );
+}
