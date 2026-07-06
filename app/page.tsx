@@ -6,12 +6,15 @@ const TailwindScript = () => (
 );
 
 const PRODUTOS = [
-  { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Com gotas de chocolate', preco: 10.90, duplo: 19.00, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
-  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - banhados no chocolate ao leite', preco: 11.90, duplo: 20.00, foto: '/cookie-nutella.png', categoria: 'Mini Cookies' },
+  { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Escolha o recheio', preco: 10.90, duplo: 19.00, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
+  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-nutella.png', categoria: 'Mini Cookies' },
   { id: 'kitkat', nome: 'Cookie KitKat', desc: 'Creme de KitKat', preco: 18.90, duplo: 36.00, foto: '/cookie-kitkat.png', categoria: 'Cookies Tamanhos Normais' },
   { id: 'pringles', nome: 'Cookie Pringles', desc: 'Recheado com Chocolate Nobre e Pringles', preco: 18.90, duplo: 36.00, foto: '/cookie-pringles.png', categoria: 'Cookies Tamanhos Normais' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais'];
+
+// VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
+const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
 export default function CardapioDigital() {
   const [passo, setPasso] = useState(1);
@@ -19,6 +22,16 @@ export default function CardapioDigital() {
     tradicional: 0, bites: 0, kitkat: 0, pringles: 0
   });
   
+  // Guarda os sabores escolhidos para cada unidade de mini cookie adicionada
+  const [saboresEscolhidos, setSaboresEscolhidos] = useState<{produtoId: string, itemIndex: number, sabor: string}[]>([]);
+  
+  // Controle da janela (modal) de escolha de sabor
+  const [modalSabor, setModalSabor] = useState<{ aberto: boolean, produtoId: string | null, itemIndex: number }>({
+    aberto: false,
+    produtoId: null,
+    itemIndex: 0
+  });
+
   const [dadosCliente, setDadosCliente] = useState({
     nome: '', whatsapp: '', data: '2026-07-06', horario: '15:30', observacoes: ''
   });
@@ -26,11 +39,52 @@ export default function CardapioDigital() {
   const [experiencia, setExperiencia] = useState('');
 
   const alterarQtd = (id: string, operacao: 'mais' | 'menos') => {
-    setQuantidades(prev => {
-      const atual = prev[id] || 0;
-      const novaQtd = operacao === 'mais' ? atual + 1 : Math.max(0, atual - 1);
-      return { ...prev, [id]: novaQtd };
-    });
+    const produto = PRODUTOS.find(p => p.id === id);
+    const qtdAtual = quantidades[id] || 0;
+
+    if (operacao === 'mais') {
+      // Se for Mini Cookie, abre a janela antes de aumentar a quantidade
+      if (produto?.categoria === 'Mini Cookies') {
+        setModalSabor({
+          aberto: true,
+          produtoId: id,
+          itemIndex: qtdAtual + 1
+        });
+      } else {
+        // Se for tamanho normal, adiciona direto
+        setQuantidades(prev => ({ ...prev, [id]: qtdAtual + 1 }));
+      }
+    } else {
+      // Operação de MENOS
+      if (qtdAtual > 0) {
+        setQuantidades(prev => ({ ...prev, [id]: qtdAtual - 1 }));
+        // Remove a última escolha de sabor feita para esse produto
+        if (produto?.categoria === 'Mini Cookies') {
+          setSaboresEscolhidos(prev => {
+            const filtrados = prev.filter(item => item.produtoId === id);
+            filtrados.pop(); // tira o último
+            const outrosProdutos = prev.filter(item => item.produtoId !== id);
+            return [...outrosProdutos, ...filtrados];
+          });
+        }
+      }
+    }
+  };
+
+  // Função chamada quando o cliente clica no sabor desejado dentro do Modal
+  const selecionarSabor = (sabor: string) => {
+    if (modalSabor.produtoId) {
+      const pId = modalSabor.produtoId;
+      
+      // Salva o sabor selecionado
+      setSaboresEscolhidos(prev => [...prev, { produtoId: pId, itemIndex: modalSabor.itemIndex, sabor }]);
+      
+      // Aumenta a quantidade do produto de fato
+      setQuantidades(prev => ({ ...prev, [pId]: (prev[pId] || 0) + 1 }));
+    }
+    
+    // Fecha a janela
+    setModalSabor({ aberto: false, produtoId: null, itemIndex: 0 });
   };
 
   const calcularTotal = () => {
@@ -52,7 +106,23 @@ export default function CardapioDigital() {
     let itensTexto = '';
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id];
-      if (qtd > 0) itensTexto += `- ${qtd}x ${p.nome}\n`;
+      if (qtd > 0) {
+        if (p.categoria === 'Mini Cookies') {
+          // Agrupa os sabores para esse produto para enviar bonitinho no WhatsApp
+          const saboresDeste = saboresEscolhidos.filter(s => s.produtoId === p.id).map(s => s.sabor);
+          
+          // Conta quantos de cada sabor foram pedidos
+          const contagemSabores: Record<string, number> = {};
+          saboresDeste.forEach(s => { contagemSabores[s] = (contagemSabores[s] || 0) + 1; });
+          
+          itensTexto += `- ${qtd}x ${p.nome}:\n`;
+          Object.entries(contagemSabores).forEach(([sab, q]) => {
+            itensTexto += `   • ${q}x Recheio de ${sab}\n`;
+          });
+        } else {
+          itensTexto += `- ${qtd}x ${p.nome}\n`;
+        }
+      }
     });
 
     const textoFormatado = `*Novo Pedido - Doceria Sávea* 🍪\n\n` +
@@ -73,7 +143,7 @@ export default function CardapioDigital() {
       <TailwindScript />
       <div className="w-full max-w-xl mx-auto space-y-4">
         
-        {/* LOGO E TOPO IDENTICO A IMAGEM */}
+        {/* LOGO E TOPO */}
         <div className="text-center pt-4 pb-2">
           <div className="flex justify-center mb-2">
             <img src="/logo-savea.png" alt="Sávea Doceria" className="h-20 object-contain" />
@@ -89,11 +159,11 @@ export default function CardapioDigital() {
             <p className="text-xs sm:text-sm text-gray-500 mt-1">Escolha seus doces favoritos e receba em casa.</p>
           </div>
 
-          {/* PASSOS COR RIGIDOS COM VERDE OLIVA */}
+          {/* PASSOS PROGRESSO */}
           <div className="flex items-center justify-center space-x-2 mb-8 text-xs font-semibold">
             <div className="text-center">
               <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-white ${passo >= 1 ? '' : 'bg-gray-200'}`} style={{ backgroundColor: passo >= 1 ? '#5f6443' : '' }}>1</div>
-              <span className="block mt-1 text-[10px]" style={{ color: passo === 1 ? '#444631' : '#9ca3af' }}>Products</span>
+              <span className="block mt-1 text-[10px]" style={{ color: passo === 1 ? '#444631' : '#9ca3af' }}>Produtos</span>
             </div>
             <div className="w-10 h-0.5 bg-gray-200 -mt-4" />
             <div className="text-center">
@@ -127,45 +197,56 @@ export default function CardapioDigital() {
 
                 return (
                   <div key={categoria} className="space-y-3">
-                    {/* Título da Categoria */}
                     <h2 className="text-base font-bold tracking-tight pt-2 border-b border-gray-100 pb-1" style={{ color: '#444631' }}>
                       {categoria}
                     </h2>
 
-                    {/* Cards dos produtos pertencentes a esta seção */}
                     <div className="space-y-3">
-                      {produtosDaCategoria.map(p => (
-                        <div key={p.id} className="rounded-xl border border-gray-100 p-3 bg-white flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
-                          <div className="flex items-center space-x-3">
-                            <img src={p.foto} alt={p.nome} className="w-16 h-16 rounded-full object-cover bg-gray-50 border border-gray-100 flex-shrink-0" />
-                            <div>
-                              <h3 className="font-bold text-sm text-gray-900">{p.nome}</h3>
-                              <p className="text-[11px] text-gray-400">{p.desc}</p>
-                              <div className="mt-1 flex items-center space-x-2 flex-wrap">
-                                <span className="text-sm font-bold" style={{ color: '#5f6443' }}>R$ {p.preco.toFixed(2).replace('.', ',')}</span>
-                                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
-                                  2 por R$ {p.duplo.toFixed(2).replace('.', ',')}
-                                </span>
+                      {produtosDaCategoria.map(p => {
+                        // Filtra os sabores escolhidos especificamente para este item para exibir logo abaixo do nome
+                        const saboresDesteCookie = saboresEscolhidos.filter(s => s.produtoId === p.id);
+
+                        return (
+                          <div key={p.id} className="rounded-xl border border-gray-100 p-3 bg-white flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
+                            <div className="flex items-center space-x-3">
+                              <img src={p.foto} alt={p.nome} className="w-16 h-16 rounded-full object-cover bg-gray-50 border border-gray-100 flex-shrink-0" />
+                              <div>
+                                <h3 className="font-bold text-sm text-gray-900">{p.nome}</h3>
+                                <p className="text-[11px] text-gray-400">{p.desc}</p>
+                                
+                                {/* EXIBE OS SABORES QUE O CLIENTE ESCOLHEU DEBAIXO DO MINI COOKIE */}
+                                {saboresDesteCookie.length > 0 && (
+                                  <div className="mt-1 text-[10px] text-gray-500 italic bg-gray-50 p-1 px-2 rounded border border-gray-100">
+                                    Sabores: {saboresDesteCookie.map(s => s.sabor).join(', ')}
+                                  </div>
+                                )}
+
+                                <div className="mt-1 flex items-center space-x-2 flex-wrap">
+                                  <span className="text-sm font-bold" style={{ color: '#5f6443' }}>R$ {p.preco.toFixed(2).replace('.', ',')}</span>
+                                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
+                                    2 por R$ {p.duplo.toFixed(2).replace('.', ',')}
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                            
+                            {/* BOTÕES VERDE OLIVA */}
+                            <div className="flex items-center space-x-2 flex-shrink-0">
+                              <button 
+                                onClick={() => alterarQtd(p.id, 'menos')}
+                                className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                                style={{ backgroundColor: '#5f6443' }}
+                              >-</button>
+                              <span className="w-5 text-center font-bold text-sm text-gray-800">{quantidades[p.id] || 0}</span>
+                              <button 
+                                onClick={() => alterarQtd(p.id, 'mais')}
+                                className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                                style={{ backgroundColor: '#5f6443' }}
+                              >+</button>
+                            </div>
                           </div>
-                          
-                          {/* BOTÕES VERDE OLIVA */}
-                          <div className="flex items-center space-x-2 flex-shrink-0">
-                            <button 
-                              onClick={() => alterarQtd(p.id, 'menos')}
-                              className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                              style={{ backgroundColor: '#5f6443' }}
-                            >-</button>
-                            <span className="w-5 text-center font-bold text-sm text-gray-800">{quantidades[p.id] || 0}</span>
-                            <button 
-                              onClick={() => alterarQtd(p.id, 'mais')}
-                              className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                              style={{ backgroundColor: '#5f6443' }}
-                            >+</button>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 );
@@ -274,6 +355,41 @@ export default function CardapioDigital() {
           <span>Uma empresa do Grupo Sávea®</span>
         </div>
       </div>
+
+      {/* JANELA JANELINHA POP-UP (MODAL) DE SABORES COBERTA POR CIMA DO SITE */}
+      {modalSabor.aberto && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl border border-gray-100 animate-fadeIn text-gray-800">
+            <div className="text-center mb-4">
+              <span className="text-2xl">✨</span>
+              <h3 className="font-bold text-lg mt-1" style={{ color: '#444631' }}>Escolha o Recheio</h3>
+              <p className="text-xs text-gray-400 mt-0.5">Selecione o sabor para a unidade {modalSabor.itemIndex}</p>
+            </div>
+            
+            {/* Lista com os botões de sabores */}
+            <div className="space-y-2">
+              {SABORES_RECHEIO.map(sabor => (
+                <button
+                  key={sabor}
+                  onClick={() => selecionarSabor(sabor)}
+                  className="w-full text-left p-3 border border-gray-200 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors flex justify-between items-center"
+                >
+                  <span>{sabor}</span>
+                  <span style={{ color: '#5f6443' }}>➔</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Botão de Cancelar */}
+            <button
+              onClick={() => setModalSabor({ aberto: false, produtoId: null, itemIndex: 0 })}
+              className="w-full mt-4 text-center py-2 text-xs font-semibold text-gray-400 hover:text-gray-600"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
