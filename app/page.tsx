@@ -127,12 +127,12 @@ export default function CardapioDigital() {
           const contagemSabores: Record<string, number> = {};
           saboresDeste.forEach(s => { contagemSabores[s] = (contagemSabores[s] || 0) + 1; });
           
-          itensTexto += `- ${qtd}x ${p.nome}:\n`;
+          itemsTexto += `- ${qtd}x ${p.nome}:\n`;
           Object.entries(contagemSabores).forEach(([sab, q]) => {
             itensTexto += `   • ${q}x Recheio de ${sab}\n`;
           });
         } else {
-          itensTexto += `- ${qtd}x ${p.nome}\n`;
+          itemsTexto += `- ${qtd}x ${p.nome}\n`;
         }
       }
     });
