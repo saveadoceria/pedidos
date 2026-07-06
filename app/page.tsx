@@ -16,7 +16,7 @@ const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais'];
 export default function CardapioDigital() {
   const [passo, setPasso] = useState(1);
   const [quantidades, setQuantidades] = useState<Record<string, number>>({
-    tradicional: 0, nutella: 0, kitkat: 0, pringles: 0
+    tradicional: 0, bites: 0, kitkat: 0, pringles: 0
   });
   
   const [dadosCliente, setDadosCliente] = useState({
@@ -93,7 +93,7 @@ export default function CardapioDigital() {
           <div className="flex items-center justify-center space-x-2 mb-8 text-xs font-semibold">
             <div className="text-center">
               <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-white ${passo >= 1 ? '' : 'bg-gray-200'}`} style={{ backgroundColor: passo >= 1 ? '#5f6443' : '' }}>1</div>
-              <span className="block mt-1 text-[10px]" style={{ color: passo === 1 ? '#444631' : '#9ca3af' }}>Produtos</span>
+              <span className="block mt-1 text-[10px]" style={{ color: passo === 1 ? '#444631' : '#9ca3af' }}>Products</span>
             </div>
             <div className="w-10 h-0.5 bg-gray-200 -mt-4" />
             <div className="text-center">
@@ -118,42 +118,58 @@ export default function CardapioDigital() {
             </div>
           )}
 
-          {/* PASSO 1: LISTA DOS COOKIES COM DESIGN IGUAL DA FOTO */}
+          {/* PASSO 1: LISTA DOS COOKIES DIVIDIDA POR SEÇÕES ESTILO IFOOD */}
           {passo === 1 && (
-            <div className="space-y-3">
-              {PRODUTOS.map(p => (
-                <div key={p.id} className="rounded-xl border border-gray-100 p-3 bg-white flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-center space-x-3">
-                    {/* Espaço da foto redonda do cookie */}
-                    <img src={p.foto} alt={p.nome} className="w-16 h-16 rounded-full object-cover bg-gray-50 border border-gray-100 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold text-sm text-gray-900">{p.nome}</h3>
-                      <p className="text-[11px] text-gray-400">{p.desc}</p>
-                      <div className="mt-1 flex items-center space-x-2 flex-wrap">
-                        <span className="text-sm font-bold" style={{ color: '#5f6443' }}>R$ {p.preco.toFixed(2).replace('.', ',')}</span>
-                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
-                          2 por R$ {p.duplo.toFixed(2).replace('.', ',')}
-                        </span>
-                      </div>
+            <div className="space-y-6">
+              {CATEGORIAS.map(categoria => {
+                const produtosDaCategoria = PRODUTOS.filter(p => p.categoria === categoria);
+                if (produtosDaCategoria.length === 0) return null;
+
+                return (
+                  <div key={categoria} className="space-y-3">
+                    {/* Título da Categoria */}
+                    <h2 className="text-base font-bold tracking-tight pt-2 border-b border-gray-100 pb-1" style={{ color: '#444631' }}>
+                      {categoria}
+                    </h2>
+
+                    {/* Cards dos produtos pertencentes a esta seção */}
+                    <div className="space-y-3">
+                      {produtosDaCategoria.map(p => (
+                        <div key={p.id} className="rounded-xl border border-gray-100 p-3 bg-white flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
+                          <div className="flex items-center space-x-3">
+                            <img src={p.foto} alt={p.nome} className="w-16 h-16 rounded-full object-cover bg-gray-50 border border-gray-100 flex-shrink-0" />
+                            <div>
+                              <h3 className="font-bold text-sm text-gray-900">{p.nome}</h3>
+                              <p className="text-[11px] text-gray-400">{p.desc}</p>
+                              <div className="mt-1 flex items-center space-x-2 flex-wrap">
+                                <span className="text-sm font-bold" style={{ color: '#5f6443' }}>R$ {p.preco.toFixed(2).replace('.', ',')}</span>
+                                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
+                                  2 por R$ {p.duplo.toFixed(2).replace('.', ',')}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* BOTÕES VERDE OLIVA */}
+                          <div className="flex items-center space-x-2 flex-shrink-0">
+                            <button 
+                              onClick={() => alterarQtd(p.id, 'menos')}
+                              className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                              style={{ backgroundColor: '#5f6443' }}
+                            >-</button>
+                            <span className="w-5 text-center font-bold text-sm text-gray-800">{quantidades[p.id] || 0}</span>
+                            <button 
+                              onClick={() => alterarQtd(p.id, 'mais')}
+                              className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                              style={{ backgroundColor: '#5f6443' }}
+                            >+</button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  
-                  {/* BOTÕES VERDE OLIVA DA COR DA SUA IMAGEM */}
-                  <div className="flex items-center space-x-2 flex-shrink-0">
-                    <button 
-                      onClick={() => alterarQtd(p.id, 'menos')}
-                      className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                      style={{ backgroundColor: '#5f6443' }}
-                    >-</button>
-                    <span className="w-5 text-center font-bold text-sm text-gray-800">{quantidades[p.id] || 0}</span>
-                    <button 
-                      onClick={() => alterarQtd(p.id, 'mais')}
-                      className="h-7 w-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                      style={{ backgroundColor: '#5f6443' }}
-                    >+</button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
 
               {/* TABELA DE SUBTOTAL TOTAL */}
               <div className="rounded-xl p-4 mt-6 text-xs space-y-2" style={{ backgroundColor: '#fbf7f0' }}>
