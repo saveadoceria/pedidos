@@ -361,14 +361,14 @@ export default function CardapioDigital() {
                   className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Retirada' ? 'bg-gray-50' : ''}`} 
                   style={{ borderColor: dadosCliente.tipoEntrega === 'Retirada' ? '#5f6443' : '#e5e7eb' }}
                 >
-                  <p className="font-bold text-gray-900">🏠 Retirada</p>
+                  <p className="font-bold text-gray-900"> Retirada</p>
                 </button>
                 <button 
                   onClick={() => setDadosCliente({...dadosCliente, tipoEntrega: 'Entrega'})} 
                   className={`w-full p-3 border rounded-xl block ${dadosCliente.tipoEntrega === 'Entrega' ? 'bg-gray-50' : ''}`} 
                   style={{ borderColor: dadosCliente.tipoEntrega === 'Entrega' ? '#5f6443' : '#e5e7eb' }}
                 >
-                  <p className="font-bold text-gray-900">🚚 Entrega</p>
+                  <p className="font-bold text-gray-900"> Entrega</p>
                 </button>
               </div>
 
@@ -390,7 +390,7 @@ export default function CardapioDigital() {
               {/* Input de PIN */}
               {dadosCliente.tipoEntrega && (
                 <div className="text-left">
-                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN (4 dígitos)</label>
+                  <label className="block text-xs font-bold text-gray-600 mb-1">Defina seu PIN de segurança (4 dígitos)</label>
                   <input 
                     type="number" 
                     value={dadosCliente.pin}
