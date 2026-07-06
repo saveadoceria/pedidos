@@ -140,13 +140,14 @@ export default function CardapioDigital() {
     const textoFormatado = `*Novo Pedido - Doceria Sávea* 🍪\n\n` +
       `*Cliente:* ${dadosCliente.nome}\n` +
       `*WhatsApp:* ${dadosCliente.whatsapp}\n` +
-      `*Retirada:* ${dadosCliente.data} às ${dadosCliente.horario}\n` +
+      `*Entrega/Retirada:* ${dadosCliente.tipoEntrega}\n` +
+      `*PIN de Segurança:* ${dadosCliente.pin}\n` +
+      `*Data/Hora:* ${dadosCliente.data} às ${dadosCliente.horario}\n` +
       `*Preferência:* ${experiencia}\n` +
       `${dadosCliente.observacoes ? `*Obs:* ${dadosCliente.observacoes}\n` : ''}\n` +
-      `*Itens do Pedido:*\n${itensTexto}\n` +
+      `*Itens do Pedido:*\n${itemsTexto}\n` +
       `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
-
-    const numeroWhats = "5514999999999"; // Coloque seu número aqui
+      const numeroWhats = "5514999999999"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
 
