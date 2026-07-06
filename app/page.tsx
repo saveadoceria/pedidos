@@ -59,6 +59,9 @@ export default function CardapioDigital() {
   const [experiencia, setExperiencia] = useState('');
   const [avisoRetirada, setAvisoRetirada] = useState(false);
 
+  const [formaPagamento, setFormaPagamento] = useState(''); // 'pix', 'cartao_entrega', 'dinheiro'
+  const [trocoPara, setTrocoPara] = useState(''); // guarda o valor do troco se for dinheiro
+
   useEffect(() => {
     const dadosSalvos = localStorage.getItem('clienteSalvo');
     if (dadosSalvos) {
@@ -486,23 +489,133 @@ export default function CardapioDigital() {
                 </div>
               )}
 
-              {/* BOTÕES DE CONTROLE */}
-              <div className="flex space-x-2 pt-4">
-                <button onClick={() => setPasso(2)} className="px-4 py-3 border rounded-xl bg-gray-50 flex-1">Voltar</button>
+{/* BOTÕES DE CONTROLE */}
+<div className="flex space-x-2 pt-4">
                 <button 
-                  onClick={finalizarPedido} 
+                  type="button"
+                  onClick={() => setPasso(2)} 
+                  className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1 text-gray-700 font-medium"
+                >
+                  Voltar
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => setPasso(4)} 
                   disabled={dadosCliente.tipoEntrega === 'Entrega' && (!dadosCliente.pin || dadosCliente.pin.length < 4)}
-                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50" 
+                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50 transition-all" 
                   style={{ backgroundColor: '#5f6443' }}
                 >
-                  Confirmar Pedido
+                  Ir para o Pagamento
+                </button>
+              </div>
+              </div>
+          )}
+        </div>
+
+{/* PASSO 4 - PAGAMENTO */}
+{passo === 4 && (
+            <div className="space-y-6 animate-fadeIn">
+              <h3 className="text-lg font-bold text-gray-800">Forma de Pagamento</h3>
+              
+              <div className="space-y-3">
+                {/* Opção Pix */}
+                <button
+                  type="button"
+                  onClick={() => { setFormaPagamento('pix'); setTrocoPara(''); }}
+                  className={`w-full p-4 border rounded-xl flex items-center justify-between transition-all ${
+                    formaPagamento === 'pix' ? 'border-[#5f6443] bg-[#5f6443]/5' : 'border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xl">📱</span>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-800 text-sm">Pix</p>
+                      <p className="text-xs text-gray-500">Chave Pix na próxima tela</p>
+                    </div>
+                  </div>
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${formaPagamento === 'pix' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
+                    {formaPagamento === 'pix' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
+                  </div>
+                </button>
+
+                {/* Opção Cartão na Entrega */}
+                <button
+                  type="button"
+                  onClick={() => { setFormaPagamento('cartao_entrega'); setTrocoPara(''); }}
+                  className={`w-full p-4 border rounded-xl flex items-center justify-between transition-all ${
+                    formaPagamento === 'cartao_entrega' ? 'border-[#5f6443] bg-[#5f6443]/5' : 'border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xl">💳</span>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-800 text-sm">Cartão na Entrega</p>
+                      <p className="text-xs text-gray-500">Levar maquininha (Crédito/Débito)</p>
+                    </div>
+                  </div>
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${formaPagamento === 'cartao_entrega' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
+                    {formaPagamento === 'cartao_entrega' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
+                  </div>
+                </button>
+
+                {/* Opção Dinheiro */}
+                <button
+                  type="button"
+                  onClick={() => setFormaPagamento('dinheiro')}
+                  className={`w-full p-4 border rounded-xl flex items-center justify-between transition-all ${
+                    formaPagamento === 'dinheiro' ? 'border-[#5f6443] bg-[#5f6443]/5' : 'border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xl">💵</span>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-800 text-sm">Dinheiro</p>
+                      <p className="text-xs text-gray-500">Pagar na retirada ou entrega</p>
+                    </div>
+                  </div>
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${formaPagamento === 'dinheiro' ? 'border-[#5f6443]' : 'border-gray-300'}`}>
+                    {formaPagamento === 'dinheiro' && <div className="w-2 h-2 rounded-full bg-[#5f6443]" />}
+                  </div>
+                </button>
+              </div>
+
+              {/* Input de Troco dinâmico (só aparece se escolher dinheiro) */}
+              {formaPagamento === 'dinheiro' && (
+                <div className="space-y-2 animate-fadeIn">
+                  <label className="block text-xs font-bold text-gray-600">Precisa de troco para quanto?</label>
+                  <input
+                    type="text"
+                    placeholder="Ex: R$ 50,00 (Deixe em branco se não precisar)"
+                    value={trocoPara}
+                    onChange={(e) => setTrocoPara(e.target.value)}
+                    className="w-full p-3 border border-gray-200 rounded-xl text-sm"
+                  />
+                </div>
+              )}
+
+              {/* BOTÕES DE CONTROLE DO PASSO 4 */}
+              <div className="flex space-x-2 pt-4">
+                <button 
+                  type="button"
+                  onClick={() => setPasso(3)} 
+                  className="px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 flex-1 text-gray-700 font-medium"
+                >
+                  Voltar
+                </button>
+                <button 
+                  type="button"
+                  onClick={finalizarPedido} 
+                  disabled={!formaPagamento}
+                  className="flex-1 text-white font-medium py-3 rounded-xl disabled:opacity-50 transition-all flex items-center justify-center space-x-2" 
+                  style={{ backgroundColor: '#5f6443' }}
+                >
+                  <span>Finalizar Pedido</span>
+                  <span>🚀</span>
                 </button>
               </div>
             </div>
           )}
-
-        </div>
-
+          
         {/* RODAPÉ MARCA */}
         <div className="text-center text-[10px] text-gray-400 pt-2 flex flex-col items-center justify-center space-y-1">
           <span>🌿</span>
