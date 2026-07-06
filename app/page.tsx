@@ -32,8 +32,17 @@ export default function CardapioDigital() {
     itemIndex: 0
   });
 
+  // Pega a data e hora atual do sistema do cliente (Fuso de Brasília/Local)
+  const dataAtual = new Date();
+  const dataFormatada = dataAtual.toLocaleDateString('en-CA'); // Gera 'AAAA-MM-DD' sempre na data local correta
+  const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); // Gera 'HH:MM'
+
   const [dadosCliente, setDadosCliente] = useState({
-    nome: '', whatsapp: '', data: '2026-07-06', horario: '15:30', observacoes: ''
+    nome: '', 
+    whatsapp: '', 
+    data: dataFormatada, 
+    horario: horarioFormatado, 
+    observacoes: ''
   });
   
   const [experiencia, setExperiencia] = useState('');
