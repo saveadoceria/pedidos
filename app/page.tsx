@@ -183,7 +183,7 @@ export default function CardapioDigital() {
     let enderecoTexto = '*Retirada no Local*';
   if (dadosCliente.tipoEntrega === 'Entrega') {
     enderecoTexto = `*Endereço:* ${dadosCliente.rua}, Nº ${dadosCliente.numero}\n` +
-      `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.Cidade || 'Bauru'}\n` +
+      `*Bairro:* ${dadosCliente.bairro} - ${dadosCliente.cidade || 'Bauru'}\n` +
       (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
       `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
       (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '');
