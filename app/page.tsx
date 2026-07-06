@@ -361,7 +361,7 @@ export default function CardapioDigital() {
         <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl border border-gray-100 animate-fadeIn text-gray-800">
             <div className="text-center mb-4">
-              <span className="text-2xl">✨</span>
+              <span className="text-2xl"> </span>
               <h3 className="font-bold text-lg mt-1" style={{ color: '#444631' }}>Escolha o Recheio</h3>
               <p className="text-xs text-gray-400 mt-0.5">Selecione o sabor para a unidade {modalSabor.itemIndex}</p>
             </div>
