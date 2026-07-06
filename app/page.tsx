@@ -514,13 +514,12 @@ export default function CardapioDigital() {
                 </button>
               </div>
               </div>
-          )}
-        </div>
+         )}
 
-{/* PASSO 4 - PAGAMENTO */}
-{passo === 4 && (
-            <div className="space-y-6 animate-fadeIn">
-              <h3 className="text-lg font-bold text-gray-800">Forma de Pagamento</h3>
+         {/* PASSO 4 - PAGAMENTO */}
+         {passo === 4 && (
+           <div className="space-y-6 animate-fadeIn">
+             <p className="text-center text-sm font-medium text-gray-600 my-2">Como deseja pagar?</p>
               
               <div className="space-y-3">
                 {/* Opção Pix */}
@@ -616,10 +615,11 @@ export default function CardapioDigital() {
                 >
                   <span>Finalizar Pedido</span>
                   <span>🚀</span>
-                </button>
+                  </button>
               </div>
             </div>
           )}
+        </div>
 
         {/* RODAPÉ MARCA */}
         <div className="text-center text-[10px] text-gray-400 pt-2 flex flex-col items-center justify-center space-y-1">
