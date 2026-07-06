@@ -238,6 +238,11 @@ export default function CardapioDigital() {
               <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-white ${passo >= 3 ? '' : 'bg-gray-200'}`} style={{ backgroundColor: passo >= 3 ? '#5f6443' : '' }}>3</div>
               <span className="block mt-1 text-[10px]" style={{ color: passo === 3 ? '#444631' : '#9ca3af' }}>Entrega</span>
             </div>
+            <div className="w-10 h-0.5 bg-gray-200 -mt-4" />
+              <div className="text-center">
+                <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-white ${passo >= 4 ? '' : 'bg-gray-200'}`} style={{ backgroundColor: passo >= 4 ? '#5f6443' : '' }}>4</div>
+                <span className="block mt-1 text-[10px]" style={{ color: passo === 4 ? '#444631' : '#9ca3af' }}>Pagamento</span>
+              </div>
           </div>
 
           {/* BANNER AVISO: PRODUÇÃO ARTESANAL */}
@@ -615,7 +620,7 @@ export default function CardapioDigital() {
               </div>
             </div>
           )}
-          
+
         {/* RODAPÉ MARCA */}
         <div className="text-center text-[10px] text-gray-400 pt-2 flex flex-col items-center justify-center space-y-1">
           <span>🌿</span>
