@@ -150,13 +150,23 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   const calcularTotal = () => {
     let totalItens = 0;
     let valorTotal = 0;
+    
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id] || 0;
-      totalItens += qtd;
-      const pares = Math.floor(qtd / 2);
-      const sobras = qtd % 2;
-      valorTotal += (pares * p.duplo) + (sobras * p.preco);
+      if (qtd > 0) {
+        totalItens += qtd;
+        // Aplica a regra de desconto apenas se for Mini Cookie (que tem a propriedade 'duplo')
+        if (p.categoria === 'Mini Cookies' && p.duplo) {
+          const pares = Math.floor(qtd / 2);
+          const sobras = qtd % 2;
+          valorTotal += (pares * p.duplo) + (sobras * p.preco);
+        } else {
+          // Para Pastéis e Bebidas, usa apenas o preço unitário
+          valorTotal += (qtd * p.preco);
+        }
+      }
     });
+    
     return { totalItens, valorTotal };
   };
 
