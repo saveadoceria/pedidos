@@ -15,6 +15,7 @@ const PRODUTOS = [
   { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 8.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
   { id: 'pastel-brigadeiro', nome: 'Pastel de Ninho com Brigadeiro', desc: 'Recheio Cremoso de Brigadeiro Autoral', preco: 8.50, foto: '/pastel-brigadeiro.png', categoria: 'Pastéis de Ninho' },
   { id: 'coca-cola', nome: 'Coca-Cola - 200ml', desc: 'PET 200ml', preco: 3.50, foto: '/coca200.png', categoria: 'Bebidas' },
+  { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais', 'Pastéis de Ninho', 'Bebidas'];
 
