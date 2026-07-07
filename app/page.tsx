@@ -549,7 +549,7 @@ export default function CardapioDigital() {
                     <span className="text-xl">📱</span>
                     <div className="text-left">
                       <p className="font-semibold text-gray-800 text-sm">Pix</p>
-                      <p className="text-xs text-gray-500">Chave Pix na próxima tela</p>
+                      <p className="text-xs text-gray-500">Chave Pix será encaminhada</p>
                     </div>
                   </div>
                   <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'pix' ? '#5f6443' : '#d1d5db' }}>
@@ -568,8 +568,8 @@ export default function CardapioDigital() {
                   <div className="flex items-center space-x-3">
                     <span className="text-xl">💳</span>
                     <div className="text-left">
-                      <p className="font-semibold text-gray-800 text-sm">Cartão na Entrega</p>
-                      <p className="text-xs text-gray-500">Levar maquininha (Crédito/Débito)</p>
+                      <p className="font-semibold text-gray-800 text-sm">Crédito ou Débito</p>
+                      <p className="text-xs text-gray-500">Levar maquininha na entrega ou retirada</p>
                     </div>
                   </div>
                   <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'cartao_entrega' ? '#5f6443' : '#d1d5db' }}>
@@ -596,6 +596,27 @@ export default function CardapioDigital() {
                   {formaPagamento === 'dinheiro' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
                 </div>
                 </button>
+
+{/* Opção Vale Alimentação/Refeição */}
+<button
+                  type="button"
+                  onClick={() => setFormaPagamento('Vale Refeição/Alimentação')}
+                  className={`w-full p-4 border rounded-xl flex items-center justify-between transition-all ${
+                    formaPagamento === 'Vale Refeição/Alimentação' ? 'border-[#5f6443] bg-[#5f6443]/5' : 'border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xl">💵</span>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-800 text-sm">Vale Refeição/Alimentação</p>
+                      <p className="text-xs text-gray-500">Levar maquininha na entrega ou na retirada</p>
+                    </div>
+                  </div>
+                  <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'Vale Refeição/Alimentação' ? '#5f6443' : '#d1d5db' }}>
+                  {formaPagamento === 'Vale Refeição/Alimentação' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
+                </div>
+                </button>
+
               </div>
 
               {/* Input de Troco dinâmico (só aparece se escolher dinheiro) */}
