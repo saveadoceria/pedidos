@@ -10,8 +10,13 @@ const PRODUTOS = [
   { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-bites.png', categoria: 'Mini Cookies' },
   { id: 'tradicional-grande', nome: 'Cookie Tradicional', desc: 'Com gotas de chocolate', preco: 18.90, duplo: 36.00, foto: '/cookie-padrao.png', categoria: 'Cookies Tamanhos Normais' },
   { id: 'nutella', nome: 'Cookie Nutella', desc: 'Recheado com Nutella Original', preco: 18.90, duplo: 36.00, foto: '/cookie-nutella.png', categoria: 'Cookies Tamanhos Normais' },
+  { id: 'pastel-nutella', nome: 'Pastel de Ninho com Nutella', desc: 'Recheio de Nutella Original', preco: 8.50, foto: '/pastel-nutella.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-doceleite', nome: 'Pastel de Ninho com Doce de Leite', desc: 'Recheio de Doce de Leite Cremoso Autoral', preco: 8.50, foto: '/pastel-doceleite.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 8.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-brigadeiro', nome: 'Pastel de Ninho com Brigadeiro', desc: 'Recheio Cremoso de Brigadeiro Autoral', preco: 8.50, foto: '/pastel-brigadeiro.png', categoria: 'Pastéis de Ninho' },
+  { id: 'coca-cola', nome: 'Coca-Cola - 200ml', desc: 'PET 200ml', preco: 3.00, foto: '/coca200.png', categoria: 'Bebidas' },
 ];
-const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais'];
+const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais', 'Pastéis de Ninho', 'Bebidas'];
 
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
@@ -19,7 +24,9 @@ const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Am
 export default function CardapioDigital() {
   const [passo, setPasso] = useState(1);
   const [quantidades, setQuantidades] = useState<Record<string, number>>({
-    tradicional: 0, bites: 0, kitkat: 0, pringles: 0
+    tradicional: 0, bites: 0, 'tradicional-grande': 0, nutella: 0, 
+    'pastel-nutella': 0, 'pastel-doce-leite': 0, 'pastel-goiabada': 0, 
+    'pastel-brigadeiro': 0, 'coca-cola': 0
   });
   
   // Guarda os sabores escolhidos para cada unidade de mini cookie adicionada
