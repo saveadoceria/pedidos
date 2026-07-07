@@ -14,7 +14,7 @@ const PRODUTOS = [
   { id: 'pastel-doceleite', nome: 'Pastel de Ninho com Doce de Leite', desc: 'Recheio de Doce de Leite Cremoso Autoral', preco: 8.50, foto: '/pastel-doceleite.png', categoria: 'Pastéis de Ninho' },
   { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 8.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
   { id: 'pastel-brigadeiro', nome: 'Pastel de Ninho com Brigadeiro', desc: 'Recheio Cremoso de Brigadeiro Autoral', preco: 8.50, foto: '/pastel-brigadeiro.png', categoria: 'Pastéis de Ninho' },
-  { id: 'coca-cola', nome: 'Coca-Cola - 200ml', desc: 'PET 200ml', preco: 3.00, foto: '/coca200.png', categoria: 'Bebidas' },
+  { id: 'coca-cola', nome: 'Coca-Cola - 200ml', desc: 'PET 200ml', preco: 3.50, foto: '/coca200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais', 'Pastéis de Ninho', 'Bebidas'];
 
