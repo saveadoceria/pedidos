@@ -7,7 +7,7 @@ const TailwindScript = () => (
 
 const PRODUTOS = [
   { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Escolha o recheio', preco: 10.90, duplo: 19.00, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
-  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-nutella.png', categoria: 'Mini Cookies' },
+  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-bites.png', categoria: 'Mini Cookies' },
   { id: 'kitkat', nome: 'Cookie KitKat', desc: 'Creme de KitKat', preco: 18.90, duplo: 36.00, foto: '/cookie-kitkat.png', categoria: 'Cookies Tamanhos Normais' },
   { id: 'pringles', nome: 'Cookie Pringles', desc: 'Recheado com Chocolate Nobre e Pringles', preco: 18.90, duplo: 36.00, foto: '/cookie-pringles.png', categoria: 'Cookies Tamanhos Normais' },
 ];
