@@ -8,8 +8,8 @@ const TailwindScript = () => (
 const PRODUTOS = [
   { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Escolha o recheio', preco: 10.90, duplo: 19.00, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
   { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-bites.png', categoria: 'Mini Cookies' },
-  { id: 'tradicional-grande', nome: 'Cookie Tradicional - Padrão', desc: 'Com gotas de chocolate', preco: 18.90, duplo: 36.00, foto: '/cookie-padrao.png', categoria: 'Cookies Tamanhos Normais' },
-  { id: 'pringles', nome: 'Cookie Pringles', desc: 'Recheado com Chocolate Nobre e Pringles', preco: 18.90, duplo: 36.00, foto: '/cookie-pringles.png', categoria: 'Cookies Tamanhos Normais' },
+  { id: 'tradicional-grande', nome: 'Cookie Tradicional', desc: 'Com gotas de chocolate', preco: 18.90, duplo: 36.00, foto: '/cookie-padrao.png', categoria: 'Cookies Tamanhos Normais' },
+  { id: 'nutella', nome: 'Cookie Nutella', desc: 'Recheado Nutella', preco: 18.90, duplo: 36.00, foto: '/cookie-nutella.png', categoria: 'Cookies Tamanhos Normais' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanhos Normais'];
 
