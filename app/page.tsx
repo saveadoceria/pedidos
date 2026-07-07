@@ -196,6 +196,8 @@ const [bandeiraVale, setBandeiraVale] = useState('');
     pagamentoTexto = '*Forma de Pagamento:* Pix';
   } else if (formaPagamento === 'cartao_entrega') {
     pagamentoTexto = '*Forma de Pagamento:* Cartão na Entrega (Levar Maquininha)';
+  } else if (formaPagamento === 'Vale Refeição/Alimentação') {
+    pagamentoTexto = `*Forma de Pagamento:* Vale Refeição/Alimentação (${bandeiraVale || 'Não especificada'})`;
   } else if (formaPagamento === 'dinheiro') {
     if (trocoPara) {
       pagamentoTexto = `*Forma de Pagamento:* Dinheiro (Troco para R$ ${trocoPara})`;
