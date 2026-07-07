@@ -171,6 +171,9 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   };
 
   const { totalItens, valorTotal } = calcularTotal();
+  const formatarMoeda = (valor: number | undefined) => {
+    return (valor || 0).toFixed(2).replace('.', ',');
+  };
 
   const finalizarPedido = () => {
     let itemsTexto = '';
@@ -230,7 +233,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
     `${agendamentoTexto}\n` +
     `*PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
     `*Itens do Pedido:*\n${itemsTexto}\n` +
-    `*Total:* R$ ${valorTotal.toFixed(2).replace('.', ',')}\n` +
+    `*Total:* R$ ${formatarMoeda(valorTotal)}\n` +
     `${pagamentoTexto}`;
       
     const numeroWhats = "5514988396568"; 
@@ -366,7 +369,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                   </div>
                   <div className="flex justify-between text-gray-500">
                     <span>Subtotal</span>
-                    <span>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+                    <span>R$ {formatarMoeda(valorTotal)}</span>
                   </div>
                   <div className="flex justify-between text-gray-500">
                     <span>Entrega</span>
@@ -374,7 +377,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                   </div>
                   <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
                     <span>TOTAL</span>
-                    <span className="text-lg" style={{ color: '#444631' }}>R$ {valorTotal.toFixed(2).replace('.', ',')}</span>
+                    <span className="text-lg" style={{ color: '#444631' }}>R$ {formatarMoeda(valorTotal)}</span>
                   </div>
                 </div>
 
