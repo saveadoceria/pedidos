@@ -266,11 +266,11 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
           {/* BANNER AVISO: PRODUÇÃO ARTESANAL */}
           {passo === 1 && (
-            <div className="rounded-xl p-3 flex items-start space-x-3 mb-5 text-xs" style={{ backgroundColor: '#fbf7f0', border: '1px solid #ebdcc5' }}>
+            <div className="flex items-center justify-center text-center space-x-3 mb-5 p-4 rounded-xl" style={{ backgroundColor: '#fbf7f0', border: '1px solid #ebdcc5' }}>
               <span className="text-lg">🌱</span>
               <div>
                 <p className="font-bold text-gray-800">Produção artesanal</p>
-                <p className="text-gray-500">Seus doces são preparados frescos para garantir o máximo de qualidade e sabor.</p>
+                <p className="text-gray-500">Nossos produtos são preparados frescos para garantir o máximo de qualidade e sabor.</p>
               </div>
             </div>
           )}
