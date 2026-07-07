@@ -31,6 +31,8 @@ export default function CardapioDigital() {
     produtoId: null,
     itemIndex: 0
   });
+  const [modalValeAberto, setModalValeAberto] = useState(false);
+const [bandeiraVale, setBandeiraVale] = useState('');
 
   // Pega a data e hora atual do sistema do cliente (Fuso de Brasília/Local)
   const dataAtual = new Date();
@@ -600,21 +602,31 @@ export default function CardapioDigital() {
 {/* Opção Vale Alimentação/Refeição */}
 <button
                   type="button"
-                  onClick={() => setFormaPagamento('Vale Refeição/Alimentação')}
+                  onClick={() => { 
+                    setFormaPagamento('Vale Refeição/Alimentação'); 
+                    setModalValeAberto(true); 
+                  }}
                   className={`w-full p-4 border rounded-xl flex items-center justify-between transition-all ${
                     formaPagamento === 'Vale Refeição/Alimentação' ? 'border-[#5f6443] bg-[#5f6443]/5' : 'border-gray-200 hover:bg-gray-50'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <span className="text-xl">💵</span>
+                    <span className="text-xl">💳</span>
                     <div className="text-left">
                       <p className="font-semibold text-gray-800 text-sm">Vale Refeição/Alimentação</p>
-                      <p className="text-xs text-gray-500">Levar maquininha na entrega ou na retirada</p>
+                      {/* Aqui é o luxo: Mostra a bandeira escolhida ou o texto padrão */}
+                      <p className="text-xs text-gray-500">
+                        {bandeiraVale ? (
+                          <span className="font-bold text-[#5f6443]">Bandeira: {bandeiraVale}</span>
+                        ) : (
+                          'Escolha sua bandeira (Alelo, Ticket...)'
+                        )}
+                      </p>
                     </div>
                   </div>
                   <div className="w-4 h-4 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: formaPagamento === 'Vale Refeição/Alimentação' ? '#5f6443' : '#d1d5db' }}>
-                  {formaPagamento === 'Vale Refeição/Alimentação' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
-                </div>
+                    {formaPagamento === 'Vale Refeição/Alimentação' && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#5f6443' }} />}
+                  </div>
                 </button>
 
               </div>
@@ -709,6 +721,50 @@ export default function CardapioDigital() {
               style={{ backgroundColor: '#5f6443' }}
             >
               Entendido
+            </button>
+          </div>
+        </div>
+      )}
+      {/* JANELA JANELINHA POP-UP (MODAL) DE VALES ACEITOS */}
+      {modalValeAberto && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl border border-gray-100 text-gray-800">
+            <div className="text-center mb-4">
+              <span className="text-4xl">💳</span>
+              <h3 className="font-bold text-lg mt-2" style={{ color: '#444631' }}>Qual é o seu Vale?</h3>
+              <p className="text-sm text-gray-500 mt-1">Selecione a bandeira para levarmos a maquininha certa:</p>
+            </div>
+            
+            {/* Grade com os botões das bandeiras */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              
+              <button onClick={() => { setBandeiraVale('Alelo'); setModalValeAberto(false); }} className={`p-4 border rounded-xl flex items-center justify-center transition-all ${bandeiraVale === 'Alelo' ? 'border-[#007a53] bg-[#007a53]/10 ring-2 ring-[#007a53]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <span className="font-bold text-[#007a53] text-lg tracking-tight">alelo</span>
+              </button>
+
+              <button onClick={() => { setBandeiraVale('Ticket'); setModalValeAberto(false); }} className={`p-4 border rounded-xl flex items-center justify-center transition-all ${bandeiraVale === 'Ticket' ? 'border-[#d8242a] bg-[#d8242a]/10 ring-2 ring-[#d8242a]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <span className="font-bold text-[#d8242a] text-lg">Ticket</span>
+              </button>
+
+              <button onClick={() => { setBandeiraVale('Pluxee'); setModalValeAberto(false); }} className={`p-4 border rounded-xl flex items-center justify-center transition-all ${bandeiraVale === 'Pluxee' ? 'border-[#351f65] bg-[#351f65]/10 ring-2 ring-[#351f65]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <span className="font-bold text-[#351f65] text-lg tracking-tight">pluxee</span>
+              </button>
+
+              <button onClick={() => { setBandeiraVale('VR Benefícios'); setModalValeAberto(false); }} className={`p-4 border rounded-xl flex items-center justify-center transition-all ${bandeiraVale === 'VR Benefícios' ? 'border-[#008238] bg-[#008238]/10 ring-2 ring-[#008238]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <span className="font-bold text-[#008238] text-lg italic">VR</span>
+              </button>
+
+              <button onClick={() => { setBandeiraVale('Green Card'); setModalValeAberto(false); }} className={`col-span-2 p-4 border rounded-xl flex items-center justify-center transition-all ${bandeiraVale === 'Green Card' ? 'border-[#5c9f4d] bg-[#5c9f4d]/10 ring-2 ring-[#5c9f4d]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <span className="font-bold text-[#5c9f4d] text-lg italic">GreenCard</span>
+              </button>
+
+            </div>
+
+            <button
+              onClick={() => setModalValeAberto(false)}
+              className="w-full py-3 rounded-xl text-gray-500 font-medium hover:bg-gray-100 transition-colors"
+            >
+              Voltar
             </button>
           </div>
         </div>
