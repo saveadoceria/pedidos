@@ -167,7 +167,12 @@ const [bandeiraVale, setBandeiraVale] = useState('');
         }
       }
     });
-    
+
+    // ADICIONE ESTA LINHA: soma 10 reais se for entrega e houver produtos no carrinho
+    if (dadosCliente.tipoEntrega === 'Entrega' && totalItens > 0) {
+      valorTotal += 10.00;
+    }
+
     return { totalItens, valorTotal };
   };
 
