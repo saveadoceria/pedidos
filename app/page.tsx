@@ -49,28 +49,46 @@ const ModalFechado = ({ mensagem }) => (
       position: 'fixed', 
       top: 0, left: 0, right: 0, bottom: 0, 
       zIndex: 9999, 
-      backgroundColor: 'rgba(243, 234, 225, 0.95)', // Fundo creme com leve transparência
+      backgroundColor: 'rgba(110, 85, 70, 0.6)', // Fundo escuro levemente transparente
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center', 
       padding: '1rem' 
     }}
   >
-    <div className="w-full max-w-sm bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-gray-100">
+    <div className="w-full max-w-sm bg-[#f6f4f0] rounded-[2rem] p-8 flex flex-col items-center text-center shadow-2xl border border-[#e5e0d8]">
       
       {/* Ícone de bloqueio */}
-      <div className="text-4xl mb-4">🚫</div>
+      <div className="bg-[#5c4033] text-white w-12 h-12 rounded-full flex items-center justify-center mb-5">
+        <span className="text-2xl">🚫</span>
+      </div>
+
+      {/* Nome da Marca */}
+      <p className="text-[#5c4033] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Sávea Doceria</p>
       
-      <h2 className="text-xl font-bold text-[#444631] mb-2">Sávea Doceria</h2>
-      
-      <p className="text-gray-600 mb-6 leading-relaxed">
+      {/* Mensagem */}
+      <h2 className="text-[#3b2b20] text-lg font-bold mb-3 leading-tight">
         {mensagem}
+      </h2>
+      
+      <p className="text-[#7d6b5d] text-xs font-medium mb-6">
+        Fiquem ligados em nossas redes sociais!<br/>Agradecemos a preferência!!
       </p>
 
-      {/* Botões Redes Sociais */}
+      {/* Exemplo de layout para o Cronômetro (placeholder visual) */}
+      <div className="flex gap-2 mb-8">
+        {[ {label: 'DIAS', val: '01'}, {label: 'HORAS', val: '12'}, {label: 'MIN', val: '47'}, {label: 'SEG', val: '21'} ].map((item) => (
+          <div key={item.label} className="bg-white px-3 py-2 rounded-xl shadow-sm border border-[#e5e0d8] flex flex-col items-center min-w-[50px]">
+            <span className="text-[#5c4033] font-bold text-lg">{item.val}</span>
+            <span className="text-[#a89a8f] text-[8px] font-bold tracking-widest">{item.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Redes Sociais */}
       <div className="flex justify-center gap-4">
-        <a href="https://instagram.com/seuusuario" className="p-3 bg-gray-50 rounded-full shadow-sm">📷</a>
-        <a href="https://wa.me/5514988396568" className="p-3 bg-gray-50 rounded-full shadow-sm">💬</a>
+        <a href="https://instagram.com/saveadoceria" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">📷</a>
+        <a href="https://wa.me/5514988396568" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">💬</a>
       </div>
     </div>
   </div>
