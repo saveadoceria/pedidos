@@ -19,10 +19,51 @@ const PRODUTOS = [
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninho', 'Bebidas'];
 
+// --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
+const CONFIGURACAO_LOJA = {
+  horarioAbertura: 9, 
+  horarioFechamento: 18, 
+  feriados: ['2026-12-25', '2027-01-01', '2028-01-01'], 
+};
+
+const verificarStatusLoja = () => {
+  const agora = new Date();
+  const horaBrasilia = agora.getHours(); 
+  const diaHoje = agora.toISOString().split('T')[0];
+
+  const estaEmFeriado = CONFIGURACAO_LOJA.feriados.includes(diaHoje);
+  const foraDoHorario = horaBrasilia < CONFIGURACAO_LOJA.horarioAbertura || horaBrasilia >= CONFIGURACAO_LOJA.horarioFechamento;
+
+  return {
+    fechadoPorHorario: estaEmFeriado || foraDoHorario,
+    mensagem: estaEmFeriado ? "Estamos em recesso!" : "No momento estamos fechados."
+  };
+};
+
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
+const ModalFechado = ({ mensagem }) => (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+    <div className="w-full max-w-sm p-6 bg-[#FDFBF7] rounded-2xl shadow-xl text-center">
+      <div className="mb-4 text-4xl">🚫</div>
+      <h2 className="mb-2 text-xl font-bold text-gray-800">Sávea Doceria</h2>
+      <p className="mb-6 text-gray-600">{mensagem}</p>
+      <div className="flex justify-center gap-4">
+        <a href="https://instagram.com/seuusuario" className="p-3 bg-white rounded-full shadow">📸</a>
+        <a href="https://wa.me/5514988396568" className="p-3 bg-white rounded-full shadow">💬</a>
+      </div>
+    </div>
+  </div>
+);
+
 export default function CardapioDigital() {
+  const [lojaFechada, setLojaFechada] = useState(false);
+
+  useEffect(() => {
+    const status = verificarStatusLoja();
+    setLojaFechada(status.fechadoPorHorario);
+  }, []);
   const [passo, setPasso] = useState(1);
   const [quantidades, setQuantidades] = useState<Record<string, number>>({
     tradicional: 0, bites: 0, 'tradicional-grande': 0, nutella: 0, 
@@ -249,6 +290,8 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   };
 
   return (
+    <>
+      {lojaFechada && <ModalFechado mensagem="No momento estamos fechados. Fique ligado em nossas redes sociais!" />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
       <div className="w-full max-w-xl mx-auto space-y-4">
@@ -803,5 +846,6 @@ const [bandeiraVale, setBandeiraVale] = useState('');
       )}
 
     </div>
+    </>
   );
 }
