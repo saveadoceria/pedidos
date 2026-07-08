@@ -50,7 +50,7 @@ const ModalFechado = () => {
     const alvo = new Date('2026-07-10T00:00:00');
     const timer = setInterval(() => {
       const agora = new Date();
-      const diff = alvo - agora;
+      const diff = alvo.getTime() - agora.getTime();
       
       if (diff <= 0) {
         clearInterval(timer);
