@@ -43,56 +43,56 @@ const verificarStatusLoja = () => {
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
-const ModalFechado = ({ mensagem }) => (
-  <div 
-    style={{ 
-      position: 'fixed', 
-      top: 0, left: 0, right: 0, bottom: 0, 
-      zIndex: 9999, 
-      backgroundColor: 'rgba(110, 85, 70, 0.6)', // Fundo escuro levemente transparente
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      padding: '1rem' 
-    }}
-  >
-    <div className="w-full max-w-sm bg-[#f6f4f0] rounded-[2rem] p-8 flex flex-col items-center text-center shadow-2xl border border-[#e5e0d8]">
-      
-      {/* Ícone de bloqueio */}
-      <div className="bg-[#5c4033] text-white w-12 h-12 rounded-full flex items-center justify-center mb-5">
-        <span className="text-2xl">🚫</span>
-      </div>
+import React, { useState, useEffect } from 'react';
 
-      {/* Nome da Marca */}
-      <p className="text-[#5c4033] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Sávea Doceria</p>
-      
-      {/* Mensagem */}
-      <h2 className="text-[#3b2b20] text-lg font-bold mb-3 leading-tight">
-        {mensagem}
-      </h2>
-      
-      <p className="text-[#7d6b5d] text-xs font-medium mb-6">
-        Fiquem ligados em nossas redes sociais!<br/>Agradecemos a preferência!!
-      </p>
+const ModalFechado = () => {
+  const [tempo, setTempo] = useState({ dias: 0, horas: 0, min: 0, seg: 0 });
 
-      {/* Exemplo de layout para o Cronômetro (placeholder visual) */}
-      <div className="flex gap-2 mb-8">
-        {[ {label: 'DIAS', val: '01'}, {label: 'HORAS', val: '12'}, {label: 'MIN', val: '47'}, {label: 'SEG', val: '21'} ].map((item) => (
-          <div key={item.label} className="bg-white px-3 py-2 rounded-xl shadow-sm border border-[#e5e0d8] flex flex-col items-center min-w-[50px]">
-            <span className="text-[#5c4033] font-bold text-lg">{item.val}</span>
-            <span className="text-[#a89a8f] text-[8px] font-bold tracking-widest">{item.label}</span>
-          </div>
-        ))}
-      </div>
+  useEffect(() => {
+    const alvo = new Date('2026-07-10T00:00:00');
+    const timer = setInterval(() => {
+      const agora = new Date();
+      const diff = alvo - agora;
+      setTempo({
+        dias: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        horas: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        min: Math.floor((diff / 1000 / 60) % 60),
+        seg: Math.floor((diff / 1000) % 60)
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
-      {/* Redes Sociais */}
-      <div className="flex justify-center gap-4">
-        <a href="https://instagram.com/saveadoceria" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">📷</a>
-        <a href="https://wa.me/5514988396568" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">💬</a>
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 9999, backgroundColor: 'rgba(121, 101, 88, 0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="bg-[#f6f4f0] p-8 rounded-3xl shadow-2xl flex flex-col items-center w-full max-w-sm text-center">
+        <svg className="w-10 h-10 text-[#5c4033] mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        
+        <p className="text-[#5c4033] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Sávea Doceria</p>
+        <h2 className="text-[#3b2b20] text-lg font-bold mb-3">No momento estamos fechados, <br/>voltamos na Sexta (10/07/2026).</h2>
+        <p className="text-[#7d6b5d] text-[11px] mb-6">Fiquem ligados em nossas redes sociais!<br/>Agradecemos a preferência!!</p>
+
+        <div className="flex gap-2 mb-6">
+          {[ {l: 'DIAS', v: tempo.dias}, {l: 'HORAS', v: tempo.horas}, {l: 'MIN', v: tempo.min}, {l: 'SEG', v: tempo.seg} ].map((i, idx) => (
+            <div key={idx} className="bg-white px-3 py-3 rounded-lg shadow-sm border border-[#e5e0d8] min-w-[55px]">
+              <div className="text-[#5c4033] font-bold text-xl">{String(i.v).padStart(2, '0')}</div>
+              <div className="text-[#a89a8f] text-[8px] font-bold tracking-widest">{i.l}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-4">
+          <a href="https://instagram.com/doceriasavea" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.22.056 1.88.257 2.32.428.583.226.999.495 1.436.932.437.437.706.853.932 1.436.171.44.372 1.1.428 2.32.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.22-.257 1.88-.428 2.32-.226.583-.495.999-.932 1.436-.437.437-.853.706-1.436.932-.44.171-1.1.372-2.32.428-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.22-.056-1.88-.257-2.32-.428-.583-.226-.999-.495-1.436-.932-.437-.437-.706-.853-.932-1.436-.171-.44-.372-1.1-.428-2.32-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.056-1.22.257-1.88.428-2.32.226-.583.495-.999.932-1.436.437-.437.853-.706 1.436-.932.44-.171 1.1-.372 2.32-.428 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.277.058-2.148.261-2.912.564-.79.306-1.458.718-2.126 1.385-.668.667-1.08 1.335-1.385 2.126-.303.764-.506 1.635-.564 2.912-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.277.261 2.148.564 2.912.306.79.718 1.458 1.385 2.126.667.668 1.335 1.08 2.126 1.385.764.303 1.635.506 2.912.564 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.277-.058 2.148-.261 2.912-.564.79-.306 1.458-.718 2.126-1.385.667-.667 1.08-1.335 1.385-2.126.303-.764.506-1.635.564-2.912.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.277-.261-2.148-.564-2.912-.306-.79-.718-1.458-1.385-2.126-.667-.668-1.335-1.08-2.126-1.385-.764-.303-1.635-.506-2.912-.564-1.28-.058-1.688-.072-4.947-.072z"/></svg>
+          </a>
+          <a href="https://wa.me/5514988396568" className="p-3 bg-white rounded-full shadow-sm text-[#5c4033]">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.683-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.888 4.44-9.888 9.884 0 1.954.54 3.844 1.536 5.501l-.988 3.606 3.54-.931z"/></svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function CardapioDigital() {
   const [lojaFechada, setLojaFechada] = useState(false);
