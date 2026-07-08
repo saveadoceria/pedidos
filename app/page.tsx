@@ -210,7 +210,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
       `*CEP:* ${dadosCliente.cep}\n` + 
       (dadosCliente.complemento ? `*Complemento:* ${dadosCliente.complemento}\n` : '') +
       `*Tipo de Imóvel:* ${dadosCliente.tipoImovel || 'Não informado'}\n` +
-      (dadosCliente.obsEntregador ? `*Obs. Entregador:* ${dadosCliente.obsEntregador}\n` : '');
+      (dadosCliente.obsEntregador ? `*Observações Entregador:* ${dadosCliente.obsEntregador}\n` : '');
   }
 
   let pagamentoTexto = '';
@@ -473,7 +473,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
           {/* PASSO 3: ENTREGA / RETIRADA E PIN */}
           {passo === 3 && (
             <div className="space-y-4 text-center text-sm">
-              <p className="font-medium text-gray-600">Como deseja receber?</p>
+              <p className="font-medium text-gray-600">Onde deseja receber?</p>
               <div className="grid grid-cols-2 gap-2 text-left">
                 <button 
                   onClick={() => { setDadosCliente({...dadosCliente, tipoEntrega: 'Retirada'}); setAvisoRetirada(true); }}
@@ -508,7 +508,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                   <input placeholder="Complemento" className="w-full p-3 border rounded-xl" value={dadosCliente.complemento} onChange={(e) => setDadosCliente({...dadosCliente, complemento: e.target.value})} />
                   
                   <p className="text-xs text-blue-700 bg-blue-50 p-2 rounded-md font-medium text-center">
-                    ⏰ Tempo estimado: 40 a 60 min.
+                    ⏰ Tempo estimado: 40 a 60 min. - Taxa fixa: apenas R$ 10,00
                   </p>
 
                   <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
@@ -530,9 +530,9 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                     <option value="Comercial">Comercial</option>
                   </select>
 
-                  <textarea placeholder="Obs. para o entregador" className="w-full p-3 border rounded-xl h-20" value={dadosCliente.obsEntregador} onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})} />
+                  <textarea placeholder="Observações para o entregador" className="w-full p-3 border rounded-xl h-20" value={dadosCliente.obsEntregador} onChange={(e) => setDadosCliente({...dadosCliente, obsEntregador: e.target.value})} />
 
-                  <label className="block text-xs font-bold text-gray-600">Defina seu PIN (4 dígitos)</label>
+                  <label className="block text-xs font-bold text-gray-600">Defina seu PIN de segurança para essa entrega (4 dígitos)</label>
                   <input type="number" placeholder="1234" value={dadosCliente.pin} className="w-full p-3 border rounded-xl" onChange={(e) => setDadosCliente({...dadosCliente, pin: e.target.value.slice(0, 4)})} />
                 </div>
               )}
