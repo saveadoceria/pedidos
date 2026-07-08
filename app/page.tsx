@@ -888,7 +888,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
     </div>
     {/* O MODAL FICA AQUI, SOLTO E LIVRE */}
-    {lojaFechada && <ModalFechado mensagem="No momento estamos fechados. Fique ligado em nossas redes sociais!" />}
+    {lojaFechada && <ModalFechado />}
     </>
   );
 }
