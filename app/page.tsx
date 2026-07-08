@@ -43,8 +43,6 @@ const verificarStatusLoja = () => {
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
-import React, { useState, useEffect } from 'react';
-
 const ModalFechado = () => {
   const [tempo, setTempo] = useState({ dias: 0, horas: 0, min: 0, seg: 0 });
 
@@ -53,6 +51,12 @@ const ModalFechado = () => {
     const timer = setInterval(() => {
       const agora = new Date();
       const diff = alvo - agora;
+      
+      if (diff <= 0) {
+        clearInterval(timer);
+        return;
+      }
+
       setTempo({
         dias: Math.floor(diff / (1000 * 60 * 60 * 24)),
         horas: Math.floor((diff / (1000 * 60 * 60)) % 24),
@@ -328,7 +332,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
   return (
 <>
-      {lojaFechada && <ModalFechado mensagem="No momento estamos fechados. Fique ligado em nossas redes sociais!" />}
+{lojaFechada && <ModalFechado />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
       <div className="w-full max-w-xl mx-auto space-y-4">
