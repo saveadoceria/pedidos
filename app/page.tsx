@@ -44,7 +44,7 @@ const verificarStatusLoja = () => {
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
 const ModalFechado = ({ mensagem }) => (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 h-full w-full">
+  <div className="!fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 h-full w-full">
     <div className="w-full max-w-sm p-6 bg-[#FDFBF7] rounded-2xl shadow-xl text-center">
       <div className="mb-4 text-4xl">🚫</div>
       <h2 className="mb-2 text-xl font-bold text-gray-800">Sávea Doceria</h2>
@@ -290,7 +290,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   };
 
   return (
-    <>
+<>
       {lojaFechada && <ModalFechado mensagem="No momento estamos fechados. Fique ligado em nossas redes sociais!" />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
@@ -846,6 +846,8 @@ const [bandeiraVale, setBandeiraVale] = useState('');
       )}
 
     </div>
+    {/* O MODAL FICA AQUI, SOLTO E LIVRE */}
+    {lojaFechada && <ModalFechado mensagem="No momento estamos fechados. Fique ligado em nossas redes sociais!" />}
     </>
   );
 }
