@@ -34,7 +34,14 @@ const verificarStatusLoja = () => {
   const diaHoje = agora.toISOString().split('T')[0];
 
   const estaEmFeriado = CONFIGURACAO_LOJA.feriados.includes(diaHoje);
-  const foraDoHorario = horaBrasilia < CONFIGURACAO_LOJA.horarioAbertura || horaBrasilia >= CONFIGURACAO_LOJA.horarioFechamento;
+  // Substitua a linha 37 e adicione isso no lugar:
+const { horarioAbertura, horarioFechamento } = CONFIGURACAO_LOJA;
+
+const estaAberto = (horarioAbertura < horarioFechamento)
+  ? (horaBrasilia >= horarioAbertura && horaBrasilia < horarioFechamento)
+  : (horaBrasilia >= horarioAbertura || horaBrasilia < horarioFechamento);
+
+const foraDoHorario = !estaAberto;
 
   return {
     fechadoPorHorario: estaEmFeriado || foraDoHorario,
