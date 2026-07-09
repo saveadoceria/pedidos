@@ -23,7 +23,7 @@ const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninh
 
 // --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
 const CONFIGURACAO_LOJA = {
-  horarioAbertura: 9, 
+  horarioAbertura: 16, 
   horarioFechamento: 18, 
   feriados: ['2026-12-25', '2027-01-01', '2028-01-01'], 
 };
@@ -414,7 +414,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
           </div>
         </div>
       )}
-      
+
 {(lojaFechada || bloqueioManual) && <ModalFechado bloqueioManual={bloqueioManual} />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
