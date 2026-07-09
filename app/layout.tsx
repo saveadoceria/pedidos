@@ -1,6 +1,9 @@
 export const metadata = {
+  title: 'Sávea Doceria',
   icons: {
-    icon: '/favicon.ico?v=2', // Adicionamos o ?v=2 para forçar o navegador a buscar de novo
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
 };
 
