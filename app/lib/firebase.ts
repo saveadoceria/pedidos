@@ -19,3 +19,8 @@ export const remoteConfig = getRemoteConfig(app);
 
 // Configuração para o Remote Config buscar novas regras a cada 1 minuto
 remoteConfig.settings.minimumFetchIntervalMillis = 60000;
+// Define os valores padrão para o Remote Config antes de buscar no servidor
+remoteConfig.defaultConfig = {
+  loja_bloqueada: false,
+  texto_aviso: ""
+};
