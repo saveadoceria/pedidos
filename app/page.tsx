@@ -20,20 +20,6 @@ const PRODUTOS = [
   { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninho', 'Bebidas'];
-export default function Home() {
-const [bloqueioManual, setBloqueioManual] = useState(false);
-useEffect(() => {
-  const verificarFirebase = async () => {
-    try {
-      await fetchAndActivate(remoteConfig);
-      const estaBloqueado = getValue(remoteConfig, 'loja_bloqueada').asBoolean();
-      setBloqueioManual(estaBloqueado);
-    } catch (error) {
-      console.error("Erro ao conectar no Firebase:", error);
-    }
-  };
-  verificarFirebase();
-}, []);
 
 // --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
 const CONFIGURACAO_LOJA = {
@@ -139,6 +125,19 @@ const ModalFechado = () => {
 };
 
 export default function CardapioDigital() {
+  const [bloqueioManual, setBloqueioManual] = useState(false);
+useEffect(() => {
+  const verificarFirebase = async () => {
+    try {
+      await fetchAndActivate(remoteConfig);
+      const estaBloqueado = getValue(remoteConfig, 'loja_bloqueada').asBoolean();
+      setBloqueioManual(estaBloqueado);
+    } catch (error) {
+      console.error("Erro ao conectar no Firebase:", error);
+    }
+  };
+  verificarFirebase();
+}, []);
   const [lojaFechada, setLojaFechada] = useState(false);
 
   useEffect(() => {
@@ -931,5 +930,4 @@ const [bandeiraVale, setBandeiraVale] = useState('');
     {lojaFechada && <ModalFechado />}
     </>
   );
-}
 }
