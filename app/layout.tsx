@@ -10,7 +10,7 @@ export const metadata = {
     siteName: 'Sávea Doceria',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.png', // Mantenha o og-image.png na pasta public!
         width: 1200,
         height: 630,
       },
@@ -18,11 +18,7 @@ export const metadata = {
     locale: 'pt_BR',
     type: 'website',
   },
-  icons: {
-    icon: '/favicon.ico?v=3',,
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
+  // Removemos a parte de "icons" daqui, pois o arquivo na pasta app resolve sozinho!
 };
 
 export default function RootLayout({
