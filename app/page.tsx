@@ -24,7 +24,7 @@ const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninh
 // --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
 const CONFIGURACAO_LOJA = {
   horarioAbertura: 9, 
-  horarioFechamento: 18, 
+  horarioFechamento: 22, 
   feriados: ['2026-12-25', '2027-01-01', '2028-01-01'], 
 };
 
