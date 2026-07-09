@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getRemoteConfig } from "firebase/remote-config";
 
 const firebaseConfig = {
@@ -15,8 +14,7 @@ const firebaseConfig = {
 // Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 
-// Inicializa Analytics e Remote Config
-const analytics = getAnalytics(app);
+// Inicializa o Remote Config
 export const remoteConfig = getRemoteConfig(app);
 
 // Configuração para o Remote Config buscar novas regras a cada 1 minuto
