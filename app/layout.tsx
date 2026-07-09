@@ -19,7 +19,7 @@ export const metadata = {
     type: 'website',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.ico?v=3',,
     shortcut: '/favicon.ico',
     apple: '/favicon.ico',
   },
