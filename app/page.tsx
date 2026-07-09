@@ -20,6 +20,19 @@ const PRODUTOS = [
   { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninho', 'Bebidas'];
+const [bloqueioManual, setBloqueioManual] = useState(false);
+useEffect(() => {
+  const verificarFirebase = async () => {
+    try {
+      await fetchAndActivate(remoteConfig);
+      const estaBloqueado = getValue(remoteConfig, 'loja_bloqueada').asBoolean();
+      setBloqueioManual(estaBloqueado);
+    } catch (error) {
+      console.error("Erro ao conectar no Firebase:", error);
+    }
+  };
+  verificarFirebase();
+}, []);
 
 // --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
 const CONFIGURACAO_LOJA = {
@@ -46,6 +59,16 @@ const verificarStatusLoja = () => {
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
 const ModalFechado = () => {
+  if (bloqueioManual) {
+    return (
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 9999, backgroundColor: 'rgba(243, 234, 225, 0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="bg-[#ffffff] p-8 rounded-3xl shadow-2xl text-center">
+          <h2 className="text-2xl font-bold mb-4">Estamos cuidando da qualidade!</h2>
+          <p>Pausamos os pedidos momentaneamente para manter a excelência. Voltamos em breve!</p>
+        </div>
+      </div>
+    );
+  }
   const [tempo, setTempo] = useState({ dias: 0, horas: 0, min: 0, seg: 0 });
 
   useEffect(() => {
@@ -348,7 +371,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
   return (
 <>
-{lojaFechada && <ModalFechado />}
+{(lojaFechada || bloqueioManual) && <ModalFechado />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
       <div className="w-full max-w-xl mx-auto space-y-4">
