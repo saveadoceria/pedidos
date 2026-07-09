@@ -1,6 +1,6 @@
 export const metadata = {
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.ico?v=2', // Adicionamos o ?v=2 para forçar o navegador a buscar de novo
   },
 };
 
