@@ -506,7 +506,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                                 <div className="mt-1 flex items-center space-x-2 flex-wrap">
                                 <span className="text-sm font-bold" style={{ color: '#5f6443' }}>R$ {formatarMoeda(p.preco)}</span>
                                 {p.duplo && (
-                                 <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full inline-block mt-1 whitespace-nowrap tracking-tight flex-shrink-0" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
+                                 <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full inline-block mt-1 whitespace-normal text-center" style={{ backgroundColor: '#f6f5ea', color: '#5f6443', border: '1px solid #e2dfcc' }}>
                                  2 por R$ {formatarMoeda(p.duplo)}
                                </span>
                                 )}
