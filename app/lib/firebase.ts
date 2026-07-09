@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getRemoteConfig } from "firebase/remote-config";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCGL0sQhom7cQadEcJI2fpWLRUPK2kSRtQ",
+  apiKey: "AlzaSyDTO6oba3QwBoQX0GMOL6DEPHkQEYvbHQs", // Cole a nova chave aqui
   authDomain: "savea-doceria.firebaseapp.com",
   projectId: "savea-doceria",
   storageBucket: "savea-doceria.appspot.com",
