@@ -1,6 +1,8 @@
+import React from 'react';
+
 export const metadata = {
   title: 'Sávea Doceria',
-  description: 'Doces de verdade, feitos com cuidado.', // A descrição que aparece embaixo do título
+  description: 'Doces de verdade, feitos com cuidado.',
   openGraph: {
     title: 'Sávea Doceria',
     description: 'Doces de verdade, feitos com cuidado.',
@@ -8,7 +10,7 @@ export const metadata = {
     siteName: 'Sávea Doceria',
     images: [
       {
-        url: '/og-image.png', // Nome da imagem que você colocou na pasta public
+        url: '/og-image.png',
         width: 1200,
         height: 630,
       },
@@ -22,3 +24,15 @@ export const metadata = {
     apple: '/favicon.ico',
   },
 };
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="pt-BR">
+      <body>{children}</body>
+    </html>
+  );
+}
