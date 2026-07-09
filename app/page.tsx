@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { remoteConfig } from "@/lib/firebase"; 
+import { remoteConfig } from "./lib/firebase"; 
 import { fetchAndActivate, getValue } from "firebase/remote-config";
 
 const TailwindScript = () => (
