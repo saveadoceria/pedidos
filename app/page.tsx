@@ -20,6 +20,7 @@ const PRODUTOS = [
   { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Pastéis de Ninho', 'Bebidas'];
+export default function Home() {
 const [bloqueioManual, setBloqueioManual] = useState(false);
 useEffect(() => {
   const verificarFirebase = async () => {
@@ -930,4 +931,5 @@ const [bandeiraVale, setBandeiraVale] = useState('');
     {lojaFechada && <ModalFechado />}
     </>
   );
+}
 }
