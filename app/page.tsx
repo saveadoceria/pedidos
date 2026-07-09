@@ -45,7 +45,7 @@ const verificarStatusLoja = () => {
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
 const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
 
-const ModalFechado = () => {
+const ModalFechado = ({ bloqueioManual }: { bloqueioManual: boolean }) => {
   if (bloqueioManual) {
     return (
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 9999, backgroundColor: 'rgba(243, 234, 225, 0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -371,7 +371,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
   return (
 <>
-{(lojaFechada || bloqueioManual) && <ModalFechado />}
+{(lojaFechada || bloqueioManual) && <ModalFechado bloqueioManual={bloqueioManual} />}
     <div className="relative min-h-screen flex items-start justify-center px-4 py-6" style={{ backgroundColor: '#f3eae1', fontFamily: 'sans-serif' }}>
       <TailwindScript />
       <div className="w-full max-w-xl mx-auto space-y-4">
@@ -927,7 +927,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
 
     </div>
     {/* O MODAL FICA AQUI, SOLTO E LIVRE */}
-    {lojaFechada && <ModalFechado />}
+    {lojaFechada && <ModalFechado bloqueioManual={bloqueioManual} />}
     </>
   );
 }
