@@ -874,7 +874,6 @@ const DATA_PRE_VENDA = "14/07/2026";
                   style={{ backgroundColor: '#5f6443' }}
                 >
                   <span>Finalizar Pedido</span>
-                  <span>🚀</span>
                   </button>
               </div>
             </div>
