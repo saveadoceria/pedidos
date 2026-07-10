@@ -20,6 +20,7 @@ const PRODUTOS = [
   { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
   { id: 'Marmitinha-brigadeiro', nome: 'Marmitinha Brigadeiro', desc: 'Marmitinha de Cookies com 220g - Brigadeiro', preco: 13.90, foto: '/marmitinhabrigadeiro.png', categoria: 'Marmitinha de Cookies' },
   { id: 'Marmitinha-doceleite', nome: 'Marmitinha Doce de Leite', desc: 'Marmitinha de Cookies com 220g - Doce de Leite', preco: 13.90, foto: '/marmitinhadoceleite.png', categoria: 'Marmitinha de Cookies' },
+  { id: 'fanta laranja', nome: 'Fanta Laranja - 200ml', desc: 'PET 200ml', preco: 3.50, foto: '/fanta200.png', categoria: 'Bebidas' },
 ];
 const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Marmitinha de Cookies', 'Pastéis de Ninho', 'Bebidas'];
 
