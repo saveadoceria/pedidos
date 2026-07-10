@@ -194,7 +194,10 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   // Pega a data e hora atual do sistema do cliente (Fuso de Brasília/Local)
   const dataAtual = new Date();
   const dataFormatada = dataAtual.toLocaleDateString('en-CA'); // Gera 'AAAA-MM-DD' sempre na data local correta
-  const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); // Gera 'HH:MM'
+  const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+const IS_PRE_VENDA = true;
+const DATA_PRE_VENDA = "15/08/2026";
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: '',
@@ -684,17 +687,27 @@ const [bandeiraVale, setBandeiraVale] = useState('');
                     ⏰ Tempo estimado: 40 a 60 min. - Taxa fixa: apenas R$ 10,00
                   </p>
 
-                  <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
-                    <option value="imediato">Entrega Imediata</option>
-                    <option value="agendado">Agendar para outro dia/hora</option>
-                  </select>
+                  {IS_PRE_VENDA ? (
+  <div className="p-3 my-2 bg-[#f6f5ea] border border-[#e2dfcc] rounded-lg">
+    <p className="text-sm font-bold text-[#5f6443]">
+      📅 Data de entrega da pré-venda: {DATA_PRE_VENDA}
+    </p>
+  </div>
+) : (
+  <>
+    <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
+      <option value="imediato">Entrega Imediata</option>
+      <option value="agendado">Agendar para outro dia/hora</option>
+    </select>
 
-                  {dadosCliente.agendamento === 'agendado' && (
-                    <div className="grid grid-cols-2 gap-2">
-                      <input type="date" className="p-3 border rounded-xl" value={dadosCliente.data} onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} />
-                      <input type="time" className="p-3 border rounded-xl" value={dadosCliente.horario} onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} />
-                    </div>
-                  )}
+    {dadosCliente.agendamento === 'agendado' && (
+      <div className="grid grid-cols-2 gap-2">
+        <input type="date" className="p-3 border rounded-xl" value={dadosCliente.data} onChange={(e) => setDadosCliente({...dadosCliente, data: e.target.value})} />
+        <input type="time" className="p-3 border rounded-xl" value={dadosCliente.horario} onChange={(e) => setDadosCliente({...dadosCliente, horario: e.target.value})} />
+      </div>
+    )}
+  </>
+)}
 
                   <select className="w-full p-3 border rounded-xl" value={dadosCliente.tipoImovel} onChange={(e) => setDadosCliente({...dadosCliente, tipoImovel: e.target.value})}>
                     <option value="">Tipo de imóvel</option>
