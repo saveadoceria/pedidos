@@ -197,7 +197,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
 const IS_PRE_VENDA = true;
-const DATA_PRE_VENDA = "15/08/2026";
+const DATA_PRE_VENDA = "14/07/2026";
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: '',
@@ -690,7 +690,7 @@ const DATA_PRE_VENDA = "15/08/2026";
                   {IS_PRE_VENDA ? (
   <div className="p-3 my-2 bg-[#f6f5ea] border border-[#e2dfcc] rounded-lg">
     <p className="text-sm font-bold text-[#5f6443]">
-      📅 Data de entrega da pré-venda: {DATA_PRE_VENDA}
+      📅 Data de entregas da pré-venda: {DATA_PRE_VENDA}
     </p>
   </div>
 ) : (
