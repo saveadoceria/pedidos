@@ -232,7 +232,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
 const IS_PRE_VENDA = true;
-const DATA_PRE_VENDA = "14/07/2026";
+const DATA_PRE_VENDA = "16/07/2026";
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: '',
