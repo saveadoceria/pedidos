@@ -391,9 +391,14 @@ const DATA_PRE_VENDA = "14/07/2026";
       }
     });
 
-    const agendamentoTexto = dadosCliente.agendamento === 'agendamento' || dadosCliente.agendamento === 'agendado'
+    let agendamentoTexto = "";
+if (IS_PRE_VENDA) {
+  agendamentoTexto = `*Data da Pré-venda:* ${DATA_PRE_VENDA}\n*Horário Escolhido:* ${dadosCliente.horario || 'Não informado'}`;
+} else {
+  agendamentoTexto = dadosCliente.agendamento === 'agendado' 
     ? `*Agendado para:* ${dadosCliente.data} às ${dadosCliente.horario}`
     : `*Entrega:* Imediata`;
+}
 
     let enderecoTexto = '*Retirada no Local*';
   if (dadosCliente.tipoEntrega === 'Entrega') {
