@@ -68,8 +68,40 @@ const ModalFechado = ({ bloqueioManual }: { bloqueioManual: boolean }) => {
   }
   const [tempo, setTempo] = useState({ dias: 0, horas: 0, min: 0, seg: 0 });
 
+  // Lógica para calcular a próxima reabertura automaticamente
+  const calcularRetorno = () => {
+    let dataAlvo = new Date();
+    
+    // Se já passou da hora de fechar hoje, começa a testar a partir de amanhã
+    if (dataAlvo.getHours() >= 18) { // 18 é o seu horário de fechamento
+      dataAlvo.setDate(dataAlvo.getDate() + 1);
+    }
+    
+    // Define a hora alvo como a hora de abertura da loja (ex: 09:00)
+    dataAlvo.setHours(9, 0, 0, 0); // 9 é o seu horário de abertura
+
+    // Regra do que é um "dia válido" (não é Sábado(6) nem Domingo(0))
+    // Nota: Como não temos acesso fácil ao array de feriados dentro deste modal, vamos focar nos finais de semana
+    const ehDiaValido = (d: Date) => {
+      const diaSemana = d.getDay();
+      return diaSemana !== 0 && diaSemana !== 6; 
+    };
+
+    // Fica pulando os dias até encontrar um dia de trabalho válido
+    while (!ehDiaValido(dataAlvo)) {
+      dataAlvo.setDate(dataAlvo.getDate() + 1);
+    }
+    
+    return dataAlvo;
+  };
+
+  const dataRetorno = calcularRetorno();
+  const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+  const diaTexto = diasSemana[dataRetorno.getDay()];
+  const dataTexto = dataRetorno.toLocaleDateString('pt-BR');
+
   useEffect(() => {
-    const alvo = new Date('2026-07-10T00:00:00');
+    const alvo = dataRetorno;
     const timer = setInterval(() => {
       const agora = new Date();
       const diff = alvo.getTime() - agora.getTime();
@@ -98,7 +130,7 @@ const ModalFechado = ({ bloqueioManual }: { bloqueioManual: boolean }) => {
         <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: '#606246' }}>Sávea Doceria</p>
         
         <h2 className="text-lg font-bold mb-3" style={{ color: '#444631' }}>
-          No momento estamos fechados, <br/>voltamos na Sexta (10/07/2026).
+        No momento estamos fechados, <br/>voltamos na {diaTexto} ({dataTexto}).
         </h2>
         
         <p className="text-[11px] mb-6" style={{ color: '#7d6b5d' }}>
