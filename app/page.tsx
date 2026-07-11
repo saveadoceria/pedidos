@@ -723,11 +723,30 @@ const DATA_PRE_VENDA = "14/07/2026";
                   </p>
 
                   {IS_PRE_VENDA ? (
-  <div className="p-3 my-2 bg-[#f6f5ea] border border-[#e2dfcc] rounded-lg">
-    <p className="text-sm font-bold text-[#5f6443]">
-      📅 Data de entregas da pré-venda: {DATA_PRE_VENDA}
-    </p>
-  </div>
+ <div className="space-y-3 my-2">
+ {/* Caixa da Data Fixa com as suas cores originais */}
+ <div className="p-3 bg-[#f6f5ea] border border-[#e2dfcc] rounded-lg">
+   <p className="text-sm font-bold text-[#5f6443]">
+     🗓️ Data de entregas da pré-venda: {DATA_PRE_VENDA}
+   </p>
+ </div>
+
+ {/* Novo Seletor de Horário */}
+ <select
+   value={dadosCliente.horario}
+   onChange={(e) => setDadosCliente({ ...dadosCliente, horario: e.target.value })}
+   className="w-full p-3 border rounded-xl outline-none"
+ >
+   <option value="">Selecione o horário de entrega...</option>
+   <option value="09:00 às 10:00">09:00 às 10:00</option>
+   <option value="10:00 às 11:00">10:00 às 11:00</option>
+   <option value="11:00 às 12:00">11:00 às 12:00</option>
+   <option value="14:00 às 15:00">14:00 às 15:00</option>
+   <option value="15:00 às 16:00">15:00 às 16:00</option>
+   <option value="16:00 às 17:00">16:00 às 17:00</option>
+   <option value="17:00 às 18:00">17:00 às 18:00</option>
+ </select>
+</div>
 ) : (
   <>
     <select className="w-full p-3 border rounded-xl" value={dadosCliente.agendamento} onChange={(e) => setDadosCliente({...dadosCliente, agendamento: e.target.value})}>
