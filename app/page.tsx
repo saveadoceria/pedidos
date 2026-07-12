@@ -361,11 +361,6 @@ const DATA_PRE_VENDA = "16/07/2026";
       }
     });
 
-    // // ADICIONE ESTA LINHA: soma 10 reais se for entrega e houver produtos no carrinho
-    if (dadosCliente.tipoEntrega === 'Entrega' && totalItens > 0) {
-      valorTotal += 10.00;
-    }
-
     return { totalItens, valorTotal };
   };
 
