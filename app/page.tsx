@@ -17,7 +17,7 @@ const PRODUTOS = [
   { id: 'leiteninho', nome: 'Cookie Leite Ninho', desc: 'Recheado com Brigadeiro de Leite Ninho', preco: 12.90, duplo: 24.00, foto: '/cookie-leiteninho.png', categoria: 'Cookies Tamanho Padrão' },
   { id: 'romeuejulieta', nome: 'Cookie Romeu e Julieta', desc: 'Recheado com Goiabada e Queijo Parmesão', preco: 13.90, duplo: 28.00, foto: '/cookie-romeuejulietta.png', categoria: 'Cookies Tamanho Padrão' },
   { id: 'Marmitinha-brigadeiro', nome: 'Marmitinha Brigadeiro', desc: 'Marmitinha de Cookies com 220g - Brigadeiro', preco: 15.90, foto: '/marmitinhabrigadeiro.png', categoria: 'Marmitinha de Cookies' },
-  { id: 'Marmitinha-doceleite', nome: 'Marmitinha Doce de Leite', desc: 'Marmitinha de Cookies com 220g - Doce de Leite', preco: 15.90, foto: '/marmitinhadoceleite.png', categoria: 'Marmitinha de Cookies' },
+  { id: 'Marmitinha-doceleite', nome: 'Marmitinha Doce de Leite', desc: 'Marmitinha de Cookies com 220g - Doce de Leite', preco: 15.90, foto: '/marmitinha-doceleite.png', categoria: 'Marmitinha de Cookies' },
   { id: 'pastel-nutella', nome: 'Pastel de Ninho com Nutella', desc: 'Recheio de Nutella', preco: 12.50, foto: '/pastel-nutella.png', categoria: 'Pastéis de Ninho' },
   { id: 'pastel-doceleite', nome: 'Pastel de Ninho com Doce de Leite', desc: 'Recheio de Doce de Leite Cremoso Autoral', preco: 10.50, foto: '/pastel-doceleite.png', categoria: 'Pastéis de Ninho' },
   { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 10.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
