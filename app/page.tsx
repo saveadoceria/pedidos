@@ -361,10 +361,10 @@ const DATA_PRE_VENDA = "16/07/2026";
       }
     });
 
-    // ADICIONE ESTA LINHA: soma 10 reais se for entrega e houver produtos no carrinho
-    if (dadosCliente.tipoEntrega === 'Entrega' && totalItens > 0) {
-      valorTotal += 10.00;
-    }
+    // // ADICIONE ESTA LINHA: soma 10 reais se for entrega e houver produtos no carrinho
+if (dadosCliente.tipoEntrega === 'Entrega' && totalItens > 0) {
+  valorTotal += 10.00;
+}
 
     return { totalItens, valorTotal };
   };
@@ -925,6 +925,37 @@ if (IS_PRE_VENDA) {
                   />
                 </div>
               )}
+
+                {/* RESUMO DO PEDIDO NA TELA DE PAGAMENTO */}
+        <div className="rounded-xl p-4 text-xs space-y-2 mt-4 bg-[#fbf7f0] text-left">
+          <div className="flex justify-between text-gray-500">
+            <span>Itens</span>
+            <span>{totalItens} itens</span>
+          </div>
+          <div className="flex justify-between text-gray-500">
+            <span>Subtotal</span>
+            <span>R$ {formatarMoeda(valorTotal)}</span>
+          </div>
+          <div className="flex justify-between text-gray-500">
+            <span>Entrega</span>
+            <span>{dadosCliente.tipoEntrega === 'Entrega' ? 'R$ 10,00' : 'A calcular'}</span>
+          </div>
+          <div className="flex justify-between border-t border-dashed border-gray-300 pt-2 font-bold text-sm text-gray-900">
+            <span>TOTAL</span>
+            <span className="text-lg" style={{ color: '#444631' }}>
+              R$ {formatarMoeda(dadosCliente.tipoEntrega === 'Entrega' ? valorTotal + 10 : valorTotal)}
+            </span>
+          </div>
+        </div>
+
+        {/* ATALHO FLUIDO PARA ADICIONAR MAIS ITENS */}
+        <button
+          type="button"
+          onClick={() => setPasso(1)}
+          className="w-full text-center text-sm font-medium text-[#5f6443] underline my-4 hover:text-opacity-80 transition-all block"
+        >
+         Deseja adicionar mais itens? Voltar ao cardápio
+        </button>
 
               {/* BOTÕES DE CONTROLE DO PASSO 4 */}
               <div className="flex space-x-2 pt-4">
