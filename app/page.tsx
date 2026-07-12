@@ -8,17 +8,21 @@ const TailwindScript = () => (
 );
 
 const PRODUTOS = [
-  { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Escolha o recheio', preco: 10.90, duplo: 19.00, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
-  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 20.00, foto: '/cookie-bites.png', categoria: 'Mini Cookies' },
-  { id: 'tradicional-grande', nome: 'Cookie Tradicional', desc: 'Com gotas de chocolate', preco: 18.90, duplo: 36.00, foto: '/cookie-padrao.png', categoria: 'Cookies Tamanho Padrão' },
-  { id: 'nutella', nome: 'Cookie Nutella', desc: 'Recheado com Nutella', preco: 18.90, duplo: 36.00, foto: '/cookie-nutella.png', categoria: 'Cookies Tamanho Padrão' },
-  { id: 'pastel-nutella', nome: 'Pastel de Ninho com Nutella', desc: 'Recheio de Nutella', preco: 8.50, foto: '/pastel-nutella.png', categoria: 'Pastéis de Ninho' },
-  { id: 'pastel-doceleite', nome: 'Pastel de Ninho com Doce de Leite', desc: 'Recheio de Doce de Leite Cremoso Autoral', preco: 8.50, foto: '/pastel-doceleite.png', categoria: 'Pastéis de Ninho' },
-  { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 8.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
-  { id: 'pastel-brigadeiro', nome: 'Pastel de Ninho com Brigadeiro', desc: 'Recheio Cremoso de Brigadeiro Autoral', preco: 8.50, foto: '/pastel-brigadeiro.png', categoria: 'Pastéis de Ninho' },
-  { id: 'Marmitinha-brigadeiro', nome: 'Marmitinha Brigadeiro', desc: 'Marmitinha de Cookies com 220g - Brigadeiro', preco: 13.90, foto: '/marmitinhabrigadeiro.png', categoria: 'Marmitinha de Cookies' },
-  { id: 'Marmitinha-doceleite', nome: 'Marmitinha Doce de Leite', desc: 'Marmitinha de Cookies com 220g - Doce de Leite', preco: 13.90, foto: '/marmitinhadoceleite.png', categoria: 'Marmitinha de Cookies' },
-  { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.50, foto: '/agua200.png', categoria: 'Bebidas' },
+  { id: 'tradicional', nome: 'Mini Cookies Tradicionais', desc: '12 unidades - Escolha o recheio', preco: 10.90, duplo: 19.90, foto: '/cookie-tradicional.png', categoria: 'Mini Cookies' },
+  { id: 'bites', nome: 'Cookie Bites', desc: '12 unidades - Escolha o recheio', preco: 11.90, duplo: 21.90, foto: '/cookie-bites.png', categoria: 'Mini Cookies' },
+  { id: 'tradicional-grande', nome: 'Cookie Tradicional', desc: 'Com gotas de chocolate', preco: 9.90, duplo: 18.00, foto: '/cookie-padrao.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'nutella', nome: 'Cookie Nutella', desc: 'Recheado com Nutella', preco: 14.90, duplo: 28.00, foto: '/cookie-nutella.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'docedeleite', nome: 'Cookie Doce de Leite', desc: 'Recheado com Doce de Leite Autoral', preco: 12.90, duplo: 24.00, foto: '/cookie-docedeleite.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'brigadeiro', nome: 'Cookie Brigadeiro', desc: 'Recheado com Brigadeiro de Chocolate', preco: 12.90, duplo: 24.00, foto: '/cookie-brigadeiro.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'leiteninho', nome: 'Cookie Leite Ninho', desc: 'Recheado com Brigadeiro de Leite Ninho', preco: 12.90, duplo: 24.00, foto: '/cookie-leiteninho.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'romeuejulieta', nome: 'Cookie Romeu e Julieta', desc: 'Recheado com Goiabada e Queijo Parmesão', preco: 13.90, duplo: 28.00, foto: '/cookie-romeuejulietta.png', categoria: 'Cookies Tamanho Padrão' },
+  { id: 'Marmitinha-brigadeiro', nome: 'Marmitinha Brigadeiro', desc: 'Marmitinha de Cookies com 220g - Brigadeiro', preco: 15.90, foto: '/marmitinhabrigadeiro.png', categoria: 'Marmitinha de Cookies' },
+  { id: 'Marmitinha-doceleite', nome: 'Marmitinha Doce de Leite', desc: 'Marmitinha de Cookies com 220g - Doce de Leite', preco: 15.90, foto: '/marmitinhadoceleite.png', categoria: 'Marmitinha de Cookies' },
+  { id: 'pastel-nutella', nome: 'Pastel de Ninho com Nutella', desc: 'Recheio de Nutella', preco: 12.50, foto: '/pastel-nutella.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-doceleite', nome: 'Pastel de Ninho com Doce de Leite', desc: 'Recheio de Doce de Leite Cremoso Autoral', preco: 10.50, foto: '/pastel-doceleite.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-goiabada', nome: 'Pastel de Ninho com Goiabada', desc: 'Recheio Cremoso de Goiabada', preco: 10.50, foto: '/pastel-goiabada.png', categoria: 'Pastéis de Ninho' },
+  { id: 'pastel-brigadeiro', nome: 'Pastel de Ninho com Brigadeiro', desc: 'Recheio Cremoso de Brigadeiro Autoral', preco: 10.50, foto: '/pastel-brigadeiro.png', categoria: 'Pastéis de Ninho' },
+  { id: 'agua-copo', nome: 'Água Mineral - Copo 200ml', desc: 'Copo de Água de 200ml', preco: 2.00, foto: '/agua200.png', categoria: 'Bebidas' },
   { id: 'coca-cola', nome: 'Coca-Cola - 200ml', desc: 'PET 200ml', preco: 3.50, foto: '/coca200.png', categoria: 'Bebidas' },
   { id: 'fanta laranja', nome: 'Fanta Laranja - 200ml', desc: 'PET 200ml', preco: 3.50, foto: '/fanta200.png', categoria: 'Bebidas' },
 ];
@@ -208,10 +212,12 @@ const fecharBanner = () => {
     setLojaFechada(status.fechadoPorHorario);
   }, []);
   const [passo, setPasso] = useState(1);
-  const [quantidades, setQuantidades] = useState<Record<string, number>>({
-    tradicional: 0, bites: 0, 'tradicional-grande': 0, nutella: 0, 
-    'pastel-nutella': 0, 'pastel-doce-leite': 0, 'pastel-goiabada': 0, 
-    'pastel-brigadeiro': 0, 'coca-cola': 0
+  const [quantidades, setQuantidades] = useState<Record<string, number>>(() => {
+    const estadoInicial: Record<string, number> = {};
+    PRODUTOS.forEach(produto => {
+      estadoInicial[produto.id] = 0;
+    });
+    return estadoInicial;
   });
   
   // Guarda os sabores escolhidos para cada unidade de mini cookie adicionada
