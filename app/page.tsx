@@ -439,7 +439,7 @@ if (IS_PRE_VENDA) {
     `*PIN de Segurança:* ${dadosCliente.pin || 'Não definido'}\n\n` +
     `*Itens do Pedido:*\n${itemsTexto}\n` +
     (dadosCliente.tipoEntrega === 'Entrega' ? `*Taxa de Entrega:* R$ 10,00\n` : '') +
-    `*Total:* R$ ${formatarMoeda(valorTotal)}\n` +
+    `*Total:* R$ ${formatarMoeda(dadosCliente.tipoEntrega === 'Entrega' ? valorTotal + 10 : valorTotal)}\n` +
     `${pagamentoTexto}`;
       
     const numeroWhats = "5514988396568"; 
