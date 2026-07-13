@@ -57,7 +57,7 @@ const foraDoHorario = !estaAberto;
 };
 
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
-const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Chocolate Meio Amargo'];
+const SABORES_RECHEIO = ['Nutella', 'Doce de Leite', 'Ninho', 'Brigadeiro'];
 
 const ModalFechado = ({ bloqueioManual }: { bloqueioManual: boolean }) => {
   if (bloqueioManual) {
