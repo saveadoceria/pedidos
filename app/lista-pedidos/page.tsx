@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+export const dynamic = 'force-dynamic';
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState<any[]>([]);
