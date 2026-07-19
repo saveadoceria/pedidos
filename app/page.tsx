@@ -51,10 +51,10 @@ const estaAberto = (horarioAbertura < horarioFechamento)
 
 const foraDoHorario = !estaAberto;
 
-  return {
-    fechadoPorHorario: estaEmFeriado || foraDoHorario,
-    mensagem: estaEmFeriado ? "Estamos em recesso!" : "No momento estamos fechados."
-  };
+return {
+  fechadoPorHorario: false, // Forçamos como false para abrir a loja
+  mensagem: ""
+};
 };
 
 // VOCÊ PODE ALTERAR OU ADICIONAR MAIS SABORES AQUI:
