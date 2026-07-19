@@ -1,8 +1,10 @@
-import { initializeApp } from "firebase/app";
-import { getRemoteConfig } from "firebase/remote-config";
+import { initializeApp } from 'firebase/app';
+import { getRemoteConfig } from 'firebase/remote-config';
+// 1. Importe o getFirestore
+import { getFirestore } from 'firebase/firestore'; 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB3_xJf1GSEgjkEtrxb_taYTXJ8NIANUVQ", // Cole a nova chave aqui
+  apiKey: "AIzaSyB3_xJf1GSEgjkEtrxb_taYTXJ8NIANUVQ",
   authDomain: "savea-doceria.firebaseapp.com",
   projectId: "savea-doceria",
   storageBucket: "savea-doceria.appspot.com",
@@ -11,16 +13,15 @@ const firebaseConfig = {
   measurementId: "G-8MNVG5DRP5"
 };
 
-// Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 
-// Inicializa o Remote Config
 export const remoteConfig = getRemoteConfig(app);
 
-// Configuração para o Remote Config buscar novas regras a cada 1 minuto
 remoteConfig.settings.minimumFetchIntervalMillis = 60000;
-// Define os valores padrão para o Remote Config antes de buscar no servidor
 remoteConfig.defaultConfig = {
   loja_bloqueada: false,
   texto_aviso: ""
 };
+
+// 2. Exporte a constante db
+export const db = getFirestore(app);

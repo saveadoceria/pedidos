@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { remoteConfig } from "./lib/firebase"; 
+import { remoteConfig, db } from "./lib/firebase";
+import { collection, addDoc } from 'firebase/firestore';
 import { fetchAndActivate, getValue } from "firebase/remote-config";
 
 const TailwindScript = () => (
@@ -369,7 +370,7 @@ const DATA_PRE_VENDA = "16/07/2026";
     return (valor || 0).toFixed(2).replace('.', ',');
   };
 
-  const finalizarPedido = () => {
+  const finalizarPedido = async () => {
     let itemsTexto = '';
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id];
@@ -391,6 +392,19 @@ const DATA_PRE_VENDA = "16/07/2026";
         }
       }
     });
+    // --- COLE AQUI ---
+    try {
+      await addDoc(collection(db, "pedidos"), {
+        data: new Date().toISOString(),
+        cliente: dadosCliente,
+        itens: itemsTexto,
+        total: valorTotal,
+        status: 'pendente'
+      });
+    } catch (e) {
+      console.error("Erro ao salvar no Firebase: ", e);
+    }
+    // --- FIM DA COLAGEM ---
 
     let agendamentoTexto = "";
 if (IS_PRE_VENDA) {
