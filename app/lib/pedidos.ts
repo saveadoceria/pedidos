@@ -6,6 +6,7 @@ export async function salvarPedido(pedido: any) {
   console.log("FUNÇÃO salvarPedido FOI CHAMADA", pedido);
 
   try {
+    console.log("Tentando enviar para Firestore...");
     const docRef = await addDoc(collection(db, "pedidos"), {
       ...pedido,
       criadoEm: serverTimestamp(),
