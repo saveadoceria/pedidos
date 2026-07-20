@@ -20,7 +20,7 @@ export async function imprimirPedido(pedido: any) {
 
 
     const config = qz.configs.create(
-      "NOME DA SUA IMPRESSORA"
+      "HPRT MPT-II(1)"
     );
 
 
