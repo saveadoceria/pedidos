@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { remoteConfig } from "./lib/firebase"; 
 import { fetchAndActivate, getValue } from "firebase/remote-config";
-// import { salvarPedido } from "./lib/pedidos";
+import { salvarPedido } from "./lib/pedidos";
 
 const TailwindScript = () => (
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
@@ -450,12 +450,12 @@ if (IS_PRE_VENDA) {
       mensagemWhatsapp: textoFormatado
     };
     
-   // try {
-//   await salvarPedido(pedido);
-// } catch (e) {
-//   alert("Não foi possível salvar seu pedido.");
-//   return;
-// }
+    try {
+ await salvarPedido(pedido);
+} catch (e) {
+  alert("Não foi possível salvar seu pedido.");
+  return;
+ }
     const numeroWhats = "5514988396568"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
