@@ -31,7 +31,7 @@ const CATEGORIAS = ['Mini Cookies', 'Cookies Tamanho Padrão', 'Marmitinha de Co
 // --- CONFIGURAÇÃO DE FUNCIONAMENTO DA LOJA ---
 const CONFIGURACAO_LOJA = {
   horarioAbertura: 9, 
-  horarioFechamento: 13, 
+  horarioFechamento: 18, 
   feriados: ['2026-12-25', '2027-01-01', '2028-01-01'], 
 };
 
@@ -237,7 +237,7 @@ const [bandeiraVale, setBandeiraVale] = useState('');
   const dataFormatada = dataAtual.toLocaleDateString('en-CA'); // Gera 'AAAA-MM-DD' sempre na data local correta
   const horarioFormatado = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-const IS_PRE_VENDA = true;
+const IS_PRE_VENDA = false;
 const DATA_PRE_VENDA = "16/07/2026";
 
   const [dadosCliente, setDadosCliente] = useState({
