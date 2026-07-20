@@ -450,7 +450,7 @@ if (IS_PRE_VENDA) {
       mensagemWhatsapp: textoFormatado
     };
 
-    console.log("TESTE - CHEGOU AQUI");
+    alert("CHEGOU NO SALVAMENTO");
     
     try {
  await salvarPedido(pedido);
