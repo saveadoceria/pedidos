@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { remoteConfig } from "./lib/firebase"; 
-import { fetchAndActivate, getValue } from "firebase/remote-config";
+// import { remoteConfig } from "./lib/firebase"; 
+// import { fetchAndActivate, getValue } from "firebase/remote-config";
 
 const TailwindScript = () => (
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
