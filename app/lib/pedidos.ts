@@ -2,6 +2,9 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function salvarPedido(pedido: any) {
+
+  console.log("FUNÇÃO salvarPedido FOI CHAMADA", pedido);
+
   try {
     const docRef = await addDoc(collection(db, "pedidos"), {
       ...pedido,
