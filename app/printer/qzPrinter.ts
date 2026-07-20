@@ -14,58 +14,87 @@ export async function conectarImpressora() {
 
 export async function imprimirPedido(pedido: any) {
 
-  await conectarImpressora();
+  try {
+
+    await conectarImpressora();
 
 
-  const config = qz.configs.create(
-    "NOME DA SUA IMPRESSORA"
-  );
+    const config = qz.configs.create(
+      "NOME DA SUA IMPRESSORA"
+    );
 
 
-  const texto = `
+    const texto = `
 SÁVEA DOCERIA
-================
+========================
 
-PEDIDO #${pedido.id}
+PEDIDO: ${pedido.id}
 
 
 CLIENTE:
-${pedido.nome}
+${pedido.cliente.nome}
 
 
-TELEFONE:
-${pedido.telefone}
+WHATSAPP:
+${pedido.cliente.whatsapp}
 
 
+ENTREGA:
+${pedido.cliente.rua}, ${pedido.cliente.numero}
+${pedido.cliente.bairro}
+${pedido.cliente.cidade}
+
+COMPLEMENTO:
+${pedido.cliente.complemento}
+
+
+------------------------
 ITENS:
-----------------
-${pedido.produtos.map(
-  (item: any) => `${item.quantidade}x ${item.nome}`
-).join("\n")}
 
+${pedido.itens}
+
+
+------------------------
 
 TOTAL:
-R$ ${pedido.total}
+R$ ${pedido.total.toFixed(2)}
 
 
 PAGAMENTO:
-${pedido.pagamento}
+${pedido.pagamento || "Não informado"}
 
 
-================
+OBS:
+${pedido.cliente.observacoes || ""}
+
+
+========================
+
 Obrigado!
+SÁVEA DOCERIA
+
 `;
 
 
-  const dados = [
-    {
-      type: "raw",
-      format: "plain",
-      data: texto
-    }
-  ];
+    const dados = [
+      {
+        type: "raw",
+        format: "plain",
+        data: texto
+      }
+    ];
 
 
-  await qz.print(config, dados);
+    await qz.print(config, dados);
+
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao imprimir pedido:",
+      erro
+    );
+
+  }
 
 }
