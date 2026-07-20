@@ -371,6 +371,7 @@ const DATA_PRE_VENDA = "16/07/2026";
   };
 
   const finalizarPedido = async () => {
+    alert("VERSÃO NOVA DO SITE");
     let itemsTexto = '';
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id];
