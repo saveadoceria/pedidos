@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { remoteConfig } from "./lib/firebase"; 
 import { fetchAndActivate, getValue } from "firebase/remote-config";
+// import { salvarPedido } from "./lib/pedidos";
 
 const TailwindScript = () => (
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
@@ -369,7 +370,7 @@ const DATA_PRE_VENDA = "16/07/2026";
     return (valor || 0).toFixed(2).replace('.', ',');
   };
 
-  const finalizarPedido = () => {
+  const finalizarPedido = async () => {
     let itemsTexto = '';
     PRODUTOS.forEach(p => {
       const qtd = quantidades[p.id];
@@ -436,7 +437,25 @@ if (IS_PRE_VENDA) {
     (dadosCliente.tipoEntrega === 'Entrega' ? `*Taxa de Entrega:* R$ 10,00\n` : '') +
     `*Total:* R$ ${formatarMoeda(dadosCliente.tipoEntrega === 'Entrega' ? valorTotal + 10 : valorTotal)}\n` +
     `${pagamentoTexto}`;
-      
+    const pedido = {
+      cliente: dadosCliente,
+      produtos: quantidades,
+      sabores: saboresEscolhidos,
+      pagamento: formaPagamento,
+      troco: trocoPara,
+      total:
+        dadosCliente.tipoEntrega === "Entrega"
+          ? valorTotal + 10
+          : valorTotal,
+      mensagemWhatsapp: textoFormatado
+    };
+    
+   // try {
+//   await salvarPedido(pedido);
+// } catch (e) {
+//   alert("Não foi possível salvar seu pedido.");
+//   return;
+// }
     const numeroWhats = "5514988396568"; 
     window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(textoFormatado)}`, '_blank');
   };
