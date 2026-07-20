@@ -449,6 +449,8 @@ if (IS_PRE_VENDA) {
           : valorTotal,
       mensagemWhatsapp: textoFormatado
     };
+
+    console.log("TESTE - CHEGOU AQUI");
     
     try {
  await salvarPedido(pedido);
