@@ -12,7 +12,7 @@ export async function conectarImpressora() {
 }
 
 
-export async function imprimirPedido(pedido) {
+export async function imprimirPedido(pedido: any) {
 
   await conectarImpressora();
 
@@ -40,7 +40,7 @@ ${pedido.telefone}
 ITENS:
 ----------------
 ${pedido.produtos.map(
-  (item) => `${item.quantidade}x ${item.nome}`
+  (item: any) => `${item.quantidade}x ${item.nome}`
 ).join("\n")}
 
 
